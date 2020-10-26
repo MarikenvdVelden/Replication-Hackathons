@@ -502,7 +502,7 @@ You can read CSV files with the function from your local device by giving the lo
 
 Conveniently, you can also read CSV files directly from the internet. For example, the data used by fivethirtyeight.com is published as csv files. Simply speaking, if you have a URL that point directly to a .csv file, you can directly download and read it into R.
 
-```{r}
+```{r, message=FALSE}
 url <- 'https://projects.fivethirtyeight.com/2020-general-data/presidential_state_toplines_2020.csv'
 d <- read_csv(url)
 ```
@@ -510,7 +510,8 @@ d <- read_csv(url)
 Note that `read_csv` immediately tells you how it parsed the data (and warns you if it notices that things went badly).
 
 ```{r}
-d
+head(d)
+#or tail(d) for the last 6 observations
 ```
 
 #### A word of caution
