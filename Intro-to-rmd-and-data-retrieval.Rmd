@@ -479,9 +479,13 @@ This week is just to familiarize you with working with Goolge trends from R.
 Next week, we will start with the hackathons and collect data.
 
 ### Open `.csv` from online source
-CSV stands for comma-separated values. It's a simple and widely used format for storing tabular (i.e. data in rows and columns) data. The nice thing about CSV is that it's essentially a plain text file. The different rows of the tabular data are indicated by different lines in the text file. The different columns are indicated by the use of a "delimiter character" (often a comma or semicolon) that splits the lines into column.
+CSV stands for comma-separated values. It's a simple and widely used format for storing tabular (i.e. data in rows and columns) data. 
+The nice thing about CSV is that it's essentially a plain text file. 
+The different rows of the tabular data are indicated by different lines in the text file. 
+The different columns are indicated by the use of a "delimiter character" (often a comma or semicolon) that splits the lines into column.
 
-The advantage of this format is that it can be imported by virtually any software that uses tabular data (e.g., Excel, SPSS, R, Stata). Because it's so simple, it holds few surprises. In comparison, if tabular data is stored as an Excel file, there might be Excel specific data that goes beyond a simple data table (e.g., formulas, muliple sheets). Accordingly, CSV is often the
+The advantage of this format is that it can be imported by virtually any software that uses tabular data (e.g., Excel, SPSS, R, Stata). 
+Because it's so simple, it holds few surprises. In comparison, if tabular data is stored as an Excel file, there might be Excel specific data that goes beyond a simple data table (e.g., formulas, muliple sheets). 
 
 That being said, there is sadly no universal standard for what a CSV file looks like. The name "commma-separated values" refers to a comma being used as a delimiter, but this can also be a semicolon, or a tab. Also, CSV files require a "quotation character" (often a double quote) in case the data contains texts. For example, if the delimiter character is a comma, and a column contains the name "Trump, Donald", it needs to be clear that this comma is part of the text and not to be interpreted as a delimiter. Another important settings is whether a dot or a comma is used as the decimal point.
 
