@@ -88,9 +88,16 @@ different functions and formatting, see
 document. Have a flick through quickly to familiarise yourself with the
 sorts of things you can alter by adding an option to the `YAML` header.
 
-Insert something like this at the top of your new .Rmd script: \``html
---- title: "Tutorial-1" author: Mariken van der Velden date: 28/Oct/2020
-output: html_document ---`
+Insert something like this at the top of your new .Rmd script:
+
+``` html
+---
+title: "Tutorial-1"
+author: Mariken van der Velden
+date: 28/Oct/2020
+output: html_document
+---
+```
 
 By default, the `title`, `author`, `date` and `output format` are
 printed at the top of your `.html` document. This is the minimum you
@@ -118,12 +125,9 @@ accompanying explanation and any outputs. Code that is included in your
 ` ``` ` (grave accents\!). These are known as code chunks and look like
 this:
 
-```` html
-
-```r
-norm <- rnorm(100, mean = 0, sd = 1)
-```
-````
+    ```{r}
+    norm <- rnorm(100, mean = 0, sd = 1)
+    ```
 
 The `r` is inside curly brackets: `{r}`. This is a space where you can
 assign rules for that code chunk. The code chunk above says that the
@@ -143,60 +147,66 @@ cursor inside the code chunk and selecting `Run -> Run Current Chunk`:
 It’s important to remember when you are creating an RMarkdown file that
 if you want to run code that refers to an object, for example:
 
-```` html
-
-```r
-head(dataframe)
-```
-````
+    ```{r}
+    head(dataframe)
+    ```
 
 You have to include instructions showing what `dataframe` is, just like
 in a normal R script. For example:
 
-``` r
-A <- c("a", "a", "b", "b")
-B <- c(5, 10, 15, 20)
-dataframe <- data.frame(A, B)
-plot(dataframe)
-```
+    ```{r}
+    A <- c("a", "a", "b", "b")
+    B <- c(5, 10, 15, 20)
+    dataframe <- data.frame(A, B)
+    plot(dataframe)
+    ```
 
-![](Intro-to-rmd-and-data-retrieval_files/figure-gfm/unnamed-chunk-4-1.png)<!-- -->
 Or if you are loading a dataframe from a `.csv` file, you must include
 the code in the `.Rmd`:
 
-```` html
-
-```r
-dataframe <- read.csv("~/Desktop/Code/dataframe.csv")
-#Remember to work from projects!
-```
-````
+    ```{r}
+    dataframe <- read.csv("~/Desktop/Code/dataframe.csv")
+    #Remember to work from projects!
+    ```
 
 Similarly, if you are using any packages in your analysis, you will have
 to load them in the `.Rmd` file using `library()` as in a normal `R`
 script.
 
-```` html
-
-```r
-library(dplyr)
-```
-````
+    ```{r}
+    library(dplyr)
+    ```
 
 #### Hiding code chunks
 
 If you don’t want the code of a particular code chunk to appear in the
 final document, but still want to show the output (e.g. a plot), then
 you can include `echo = FALSE` in the code chunk instructions: `{r, echo
-= FALSE}`. Similarly, you might want to create an object, but not
-include both the code and the output in the final `.html` file. To do
-this you can use, `include = FALSE`: `{r, include = FALSE}`. Be aware
-though, when making reproducible research it’s often not a good idea to
-completely hide some part of your analysis\! In some cases, when you
-load packages into `RStudio`, various warning messages such as
+= FALSE}`.
+
+    ```{r, echo = FALSE}``
+
+Similarly, you might want to create an object, but not include both the
+code and the output in the final `.html` file. To do this you can use,
+`include = FALSE`: `{r, include = FALSE}`.
+
+    ```{r, include = FALSE}
+    A <- c("a", "a", "b", "b")
+    B <- c(5, 10, 15, 20)
+    dataframe <- data.frame(A, B)
+    plot(dataframe)
+    ```
+
+Be aware though, when making reproducible research it’s often not a good
+idea to completely hide some part of your analysis\! In some cases, when
+you load packages into `RStudio`, various warning messages such as
 *“Warning: package ‘dplyr’ was built under R version 3.4.4”* might
 appear. If you do not want these warning messages to appear, you can use
 `warning = FALSE`: `{r, warning = FALSE}`.
+
+    ```{r, warning = FALSE}
+    library(dplyr)
+    ```
 
 **REMEMBER**: R Markdown does not pay attention to anything you have
 loaded in other R scripts, you MUST load all objects and packages in the
@@ -509,14 +519,12 @@ figure we created above. To manually set the figure dimensions, you can
 insert an instruction into the curly braces: `{r, fig.width = 4,
 fig.height = 3, }`.
 
-``` r
-A <- c("a", "a", "b", "b")
-B <- c(5, 10, 15, 20)
-dataframe <- data.frame(A, B)
-plot(dataframe)
-```
-
-![](Intro-to-rmd-and-data-retrieval_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->
+    ```{r, fig.width = 4, fig.height = 3, }
+    A <- c("a", "a", "b", "b")
+    B <- c(5, 10, 15, 20)
+    dataframe <- data.frame(A, B)
+    plot(dataframe)
+    ```
 
 #### Inserting Tables
 
@@ -525,16 +533,9 @@ plot(dataframe)
 While R Markdown can print the contents of a data frame easily by
 enclosing the name of the data frame in a code chunk:
 
-``` r
-dataframe
-```
-
-| A |  B |
-| :- | -: |
-| a |  5 |
-| a | 10 |
-| b | 15 |
-| b | 20 |
+    ```{r}
+    dataframe
+    ```
 
 This can look a bit messy, especially with data frames with a lot of
 columns. Including a formal table requires more effort.
@@ -547,11 +548,11 @@ kable to make a table out of the object `dataframe` and that numbers
 should have two significant figures. Remember to load the `knitr`
 package in your `.Rmd` file as well.
 
-``` r
-# Don't forget to run: install.packages("knitr") before!
-library(knitr)
-kable(dataframe, digits = 2)
-```
+    ```{r}
+    # Don't forget to run: install.packages("knitr") before!
+    library(knitr)
+    kable(dataframe, digits = 2)
+    ```
 
 #### Creating tables from model outputs
 
@@ -561,44 +562,18 @@ example below shows a simple example linear model, where the summary
 output table can be saved as a new R object and then added into the
 markdown file.
 
-``` r
-library(broom)
-library(pander)
-A <- c(20, 15, 10)
-B <- c(1, 2, 3)
-
-lm_test <- lm(A ~ B)            # Creating linear model 
-summary(lm_test)                # Obtaining linear model summary statistics
-```
-
-    ## 
-    ## Call:
-    ## lm(formula = A ~ B)
-    ## 
-    ## Residuals:
-    ##          1          2          3 
-    ##  1.088e-15 -2.176e-15  1.088e-15 
-    ## 
-    ## Coefficients:
-    ##               Estimate Std. Error    t value Pr(>|t|)    
-    ## (Intercept)  2.500e+01  4.070e-15  6.142e+15  < 2e-16 ***
-    ## B           -5.000e+00  1.884e-15 -2.654e+15  2.4e-16 ***
-    ## ---
-    ## Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
-    ## 
-    ## Residual standard error: 2.665e-15 on 1 degrees of freedom
-    ## Multiple R-squared:      1,  Adjusted R-squared:      1 
-    ## F-statistic: 7.043e+30 on 1 and 1 DF,  p-value: 2.399e-16
-
-``` r
-table_obj <- tidy(lm_test)      # Using tidy() to create a new R object called table 
-pander(table_obj, digits = 3)   # Using pander() to view the created table, with 3 sig figs  
-```
-
-|    term     | estimate | std.error | statistic  | p.value  |
-| :---------: | :------: | :-------: | :--------: | :------: |
-| (Intercept) |    25    | 4.07e-15  |  6.14e+15  | 1.04e-16 |
-|      B      |   \-5    | 1.88e-15  | \-2.65e+15 | 2.4e-16  |
+    ```{r}
+    library(broom)
+    library(pander)
+    A <- c(20, 15, 10)
+    B <- c(1, 2, 3)
+    
+    lm_test <- lm(A ~ B)            # Creating linear model 
+    summary(lm_test)                # Obtaining linear model summary statistics
+    
+    table_obj <- tidy(lm_test)      # Using tidy() to create a new R object called table 
+    pander(table_obj, digits = 3)   # Using pander() to view the created table, with 3 sig figs 
+    ```
 
 #### Formatting Text
 
@@ -751,7 +726,7 @@ ggplot(data = news, mapping = aes(x = week, y = count)) +
   theme_minimal()
 ```
 
-![](Intro-to-rmd-and-data-retrieval_files/figure-gfm/unnamed-chunk-15-1.png)<!-- -->
+![](Intro-to-rmd-and-data-retrieval_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
 #### Assignment: Working with AmCAT queries
 
@@ -799,7 +774,7 @@ tail(trend)
 | 100 | 2016-11-27 |    8 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 |
 | 101 | 2016-12-04 |    7 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 |
 | 102 | 2016-12-11 |   23 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 |
-| 103 | 2016-12-18 |   13 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 |
+| 103 | 2016-12-18 |   14 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 |
 | 104 | 2016-12-25 |    7 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 |
 | 105 | 2017-01-01 |    6 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 |
 
@@ -812,7 +787,7 @@ ggplot(data = trend, mapping = aes(x = date, y = hits)) +
   theme_minimal()
 ```
 
-![](Intro-to-rmd-and-data-retrieval_files/figure-gfm/unnamed-chunk-18-1.png)<!-- -->
+![](Intro-to-rmd-and-data-retrieval_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
 
 Note: If you want to merge this with AmCAT aggregate data, one problem
 is that google trends weeks start on Sunday, while AmCAT weeks start on
@@ -837,7 +812,7 @@ tail(trend)
 | 100 | 2016-11-27 |    8 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-11-27 |
 | 101 | 2016-12-04 |    7 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-12-04 |
 | 102 | 2016-12-11 |   23 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-12-11 |
-| 103 | 2016-12-18 |   13 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-12-18 |
+| 103 | 2016-12-18 |   14 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-12-18 |
 | 104 | 2016-12-25 |    7 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-12-25 |
 | 105 | 2017-01-01 |    6 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2017-01-01 |
 
@@ -863,7 +838,7 @@ tail(trend)
 | 100 | 2016-11-27 |    8 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-11-27 | 2016-11-28 |
 | 101 | 2016-12-04 |    7 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-12-04 | 2016-12-05 |
 | 102 | 2016-12-11 |   23 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-12-11 | 2016-12-12 |
-| 103 | 2016-12-18 |   13 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-12-18 | 2016-12-19 |
+| 103 | 2016-12-18 |   14 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-12-18 | 2016-12-19 |
 | 104 | 2016-12-25 |    7 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2016-12-25 | 2016-12-26 |
 | 105 | 2017-01-01 |    6 | syria   | GB  | 2015-01-01 2017-01-01 | web   |        0 | 2017-01-01 | 2017-01-02 |
 
@@ -967,14 +942,14 @@ badly).
 head(d)
 ```
 
-| cycle | branch    | model      | modeldate  | candidate\_inc | candidate\_chal | candidate\_3rd | state         |   tipping |       vpi | winstate\_inc | winstate\_chal | winstate\_3rd | voteshare\_inc | voteshare\_chal | voteshare\_3rd | voteshare\_other | voteshare\_inc\_hi | voteshare\_chal\_hi | voteshare\_3rd\_hi | voteshare\_other\_hi | voteshare\_inc\_lo | voteshare\_chal\_lo | voteshare\_3rd\_lo | voteshare\_other\_lo |      margin |   margin\_hi | margin\_lo | win\_EC\_if\_win\_state\_inc | win\_EC\_if\_win\_state\_chal | win\_state\_if\_win\_EC\_inc | win\_state\_if\_win\_EC\_chal | state\_turnout | state\_turnout\_hi | state\_turnout\_lo | timestamp            | simulations |
-| ----: | :-------- | :--------- | :--------- | :------------- | :-------------- | :------------- | :------------ | --------: | --------: | ------------: | -------------: | :------------ | -------------: | --------------: | :------------- | ---------------: | -----------------: | ------------------: | :----------------- | -------------------: | -----------------: | ------------------: | :----------------- | -------------------: | ----------: | -----------: | ---------: | ---------------------------: | ----------------------------: | ---------------------------: | ----------------------------: | -------------: | -----------------: | -----------------: | :------------------- | ----------: |
-|  2020 | President | polls-plus | 10/27/2020 | Trump          | Biden           | NA             | Wyoming       | 0.0000000 | 0.0000000 |      0.998875 |       0.001125 | NA            |       67.77541 |        29.18280 | NA             |        3.0417890 |           73.20071 |            34.59228 | NA                 |             4.640159 |           62.27174 |            23.85836 | NA                 |            1.6528820 |   38.592610 |   49.1912800 |   27.80234 |                    0.1180328 |                     1.0000000 |                    1.0000000 |                     0.0012846 |       272729.8 |           317975.5 |           229289.5 | 14:41:03 27 Oct 2020 |       40000 |
-|  2020 | President | polls-plus | 10/27/2020 | Trump          | Biden           | NA             | Wisconsin     | 0.1165125 | 5.4704340 |      0.109700 |       0.890300 | NA            |       46.20734 |        52.87378 | NA             |        0.9188738 |           49.69691 |            56.33738 | NA                 |             1.366854 |           42.75473 |            49.37722 | NA                 |            0.5198991 |  \-6.666439 |    0.3007317 | \-13.56530 |                    0.7294895 |                     0.9539200 |                    0.6787532 |                     0.9697411 |      3308339.0 |          3736810.0 |          2890655.0 | 14:41:03 27 Oct 2020 |       40000 |
-|  2020 | President | polls-plus | 10/27/2020 | Trump          | Biden           | NA             | West Virginia | 0.0002500 | 0.0508098 |      0.988000 |       0.012000 | NA            |       63.00648 |        35.17671 | NA             |        1.8168080 |           69.51809 |            41.67404 | NA                 |             2.740257 |           56.49961 |            28.67587 | NA                 |            1.0059840 |   27.829770 |   40.8114400 |   14.86559 |                    0.1191549 |                     0.9854167 |                    0.9985157 |                     0.0135023 |       749223.7 |           867954.5 |           635579.0 | 14:41:03 27 Oct 2020 |       40000 |
-|  2020 | President | polls-plus | 10/27/2020 | Trump          | Biden           | NA             | Washington    | 0.0023250 | 0.0914802 |      0.008750 |       0.991250 | NA            |       37.14498 |        60.72640 | NA             |        2.1286200 |           42.50240 |            66.05082 | NA                 |             3.221380 |           31.84756 |            55.34573 | NA                 |            1.1720580 | \-23.581420 | \-12.8701600 | \-34.12744 |                    0.3142857 |                     0.8774779 |                    0.0233249 |                     0.9931775 |      3867630.0 |          4385428.0 |          3361256.0 | 14:41:03 27 Oct 2020 |       40000 |
-|  2020 | President | polls-plus | 10/27/2020 | Trump          | Biden           | NA             | Virginia      | 0.0131875 | 0.4418493 |      0.013250 |       0.986750 | NA            |       43.48177 |        55.55008 | NA             |        0.9681428 |           46.74117 |            58.78660 | NA                 |             1.441606 |           40.24417 |            52.28475 | NA                 |            0.5469124 | \-12.068310 |  \-5.5676500 | \-18.50842 |                    0.8452830 |                     0.8855333 |                    0.0949958 |                     0.9977449 |      4592423.0 |          5185965.0 |          4009363.0 | 14:41:03 27 Oct 2020 |       40000 |
-|  2020 | President | polls-plus | 10/27/2020 | Trump          | Biden           | NA             | Vermont       | 0.0002250 | 0.1000840 |      0.006775 |       0.993225 | NA            |       31.04051 |        66.39115 | NA             |        2.5683400 |           38.30011 |            73.50414 | NA                 |             3.902835 |           23.88448 |            59.08328 | NA                 |            1.4045270 | \-35.350640 | \-20.8838000 | \-49.53936 |                    0.2583026 |                     0.8766896 |                    0.0148431 |                     0.9942622 |       346142.0 |           395842.0 |           298508.5 | 14:41:03 27 Oct 2020 |       40000 |
+| cycle | branch    | model      | modeldate  | candidate\_inc | candidate\_chal | candidate\_3rd | state         |   tipping |       vpi | winstate\_inc | winstate\_chal | winstate\_3rd | voteshare\_inc | voteshare\_chal | voteshare\_3rd | voteshare\_other | voteshare\_inc\_hi | voteshare\_chal\_hi | voteshare\_3rd\_hi | voteshare\_other\_hi | voteshare\_inc\_lo | voteshare\_chal\_lo | voteshare\_3rd\_lo | voteshare\_other\_lo |      margin |  margin\_hi | margin\_lo | win\_EC\_if\_win\_state\_inc | win\_EC\_if\_win\_state\_chal | win\_state\_if\_win\_EC\_inc | win\_state\_if\_win\_EC\_chal | state\_turnout | state\_turnout\_hi | state\_turnout\_lo | timestamp            | simulations |
+| ----: | :-------- | :--------- | :--------- | :------------- | :-------------- | :------------- | :------------ | --------: | --------: | ------------: | -------------: | :------------ | -------------: | --------------: | :------------- | ---------------: | -----------------: | ------------------: | :----------------- | -------------------: | -----------------: | ------------------: | :----------------- | -------------------: | ----------: | ----------: | ---------: | ---------------------------: | ----------------------------: | ---------------------------: | ----------------------------: | -------------: | -----------------: | -----------------: | :------------------- | ----------: |
+|  2020 | President | polls-plus | 10/28/2020 | Trump          | Biden           | NA             | Wyoming       | 0.0000125 | 0.0073945 |      0.998775 |       0.001225 | NA            |       67.57626 |        29.38370 | NA             |        3.0400510 |           72.98618 |            34.74894 | NA                 |             4.628999 |           62.12553 |            24.06807 | NA                 |            1.6539610 |   38.192560 |   48.782420 |   27.50507 |                    0.1154915 |                     0.9795918 |                    0.9997833 |                     0.0013635 |       272928.7 |           317754.0 |           229676.0 | 10:29:04 28 Oct 2020 |       40000 |
+|  2020 | President | polls-plus | 10/28/2020 | Trump          | Biden           | NA             | Wisconsin     | 0.0607000 | 2.8427970 |      0.061550 |       0.938450 | NA            |       45.37839 |        53.70832 | NA             |        0.9132881 |           48.80832 |            57.08505 | NA                 |             1.356502 |           41.99062 |            50.28198 | NA                 |            0.5174813 |  \-8.329926 |  \-1.474642 | \-15.08174 |                    0.8294070 |                     0.9275667 |                    0.4424702 |                     0.9890637 |      3310824.0 |          3737713.0 |          2895063.0 | 10:29:04 28 Oct 2020 |       40000 |
+|  2020 | President | polls-plus | 10/28/2020 | Trump          | Biden           | NA             | West Virginia | 0.0000500 | 0.0114606 |      0.988400 |       0.011600 | NA            |       63.10468 |        35.08353 | NA             |        1.8117870 |           69.49330 |            41.50108 | NA                 |             2.728519 |           56.66076 |            28.70397 | NA                 |            1.0043070 |   28.021150 |   40.771360 |   15.22908 |                    0.1165267 |                     0.9827586 |                    0.9982665 |                     0.0129531 |       749385.3 |           866117.5 |           636684.0 | 10:29:04 28 Oct 2020 |       40000 |
+|  2020 | President | polls-plus | 10/28/2020 | Trump          | Biden           | NA             | Washington    | 0.0028875 | 0.1158887 |      0.009900 |       0.990100 | NA            |       37.37862 |        60.50002 | NA             |        2.1213600 |           42.65926 |            65.77175 | NA                 |             3.205749 |           32.10382 |            55.20705 | NA                 |            1.1694810 | \-23.121400 | \-12.589750 | \-33.62102 |                    0.3308081 |                     0.8822341 |                    0.0283857 |                     0.9925008 |      3865393.0 |          4383465.0 |          3361572.0 | 10:29:04 28 Oct 2020 |       40000 |
+|  2020 | President | polls-plus | 10/28/2020 | Trump          | Biden           | NA             | Virginia      | 0.0115875 | 0.3937938 |      0.009825 |       0.990175 | NA            |       43.32146 |        55.71736 | NA             |        0.9611730 |           46.54315 |            58.92624 | NA                 |             1.429014 |           40.10530 |            52.47780 | NA                 |            0.5437651 | \-12.395900 |  \-5.973042 | \-18.80868 |                    0.8498728 |                     0.8873684 |                    0.0723727 |                     0.9983525 |      4585481.0 |          5177173.0 |          4003434.0 | 10:29:04 28 Oct 2020 |       40000 |
+|  2020 | President | polls-plus | 10/28/2020 | Trump          | Biden           | NA             | Vermont       | 0.0001875 | 0.0810101 |      0.006425 |       0.993575 | NA            |       30.84590 |        66.62216 | NA             |        2.5319420 |           38.00168 |            73.68081 | NA                 |             3.840321 |           23.82847 |            59.39259 | NA                 |            1.3870230 | \-35.776260 | \-21.476680 | \-49.76702 |                    0.2723735 |                     0.8811111 |                    0.0151679 |                     0.9947165 |       345585.3 |           395049.0 |           297370.5 | 10:29:04 28 Oct 2020 |       40000 |
 
 ``` r
 #or tail(d) for the last 6 observations

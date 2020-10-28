@@ -64,7 +64,7 @@ Rules in the header section will alter the whole document.
 Have a flick through quickly to familiarise yourself with the sorts of things you can alter by adding an option to the `YAML` header.
 
 Insert something like this at the top of your new .Rmd script:
-````html
+```html
 ---
 title: "Tutorial-1"
 author: Mariken van der Velden
@@ -88,8 +88,9 @@ A preview appears, and a `.html` file is also saved to the same folder where you
 Below the `YAML` header is the space where you will write your code, accompanying explanation and any outputs. 
 Code that is included in your `.Rmd` document should be enclosed by three backwards apostrophes ` ``` ` (grave accents!). These are known as code chunks and look like this:
 
-````html
-```{r}
+
+````
+```{r}`r ''`
 norm <- rnorm(100, mean = 0, sd = 1)
 ```
 ````
@@ -107,24 +108,27 @@ You can run an individual chunk of code at any time by placing your cursor insid
 
 It's important to remember when you are creating an RMarkdown file that if you want to run code that refers to an object, for example:
 
-````html
-```{r, eval=F}
+````
+```{r}`r ''`
 head(dataframe)
 ```
 ````
 
 You have to include instructions showing what `dataframe` is, just like in a normal R script. For example: 
 
-```{r}
+````
+```{r}`r ''`
 A <- c("a", "a", "b", "b")
 B <- c(5, 10, 15, 20)
 dataframe <- data.frame(A, B)
 plot(dataframe)
 ```
+````
+
 Or if you are loading a dataframe from a `.csv` file, you must include the code in the `.Rmd`: 
 
-````html
-```{r, eval=F}
+````
+```{r}`r ''`
 dataframe <- read.csv("~/Desktop/Code/dataframe.csv")
 #Remember to work from projects!
 ```
@@ -132,8 +136,8 @@ dataframe <- read.csv("~/Desktop/Code/dataframe.csv")
 
 Similarly, if you are using any packages in your analysis, you will have to load them in the `.Rmd` file using `library()` as in a normal `R` script. 
 
-````html
-```{r, eval=F}
+````
+```{r}`r ''`
 library(dplyr)
 ```
 ````
@@ -141,11 +145,38 @@ library(dplyr)
 #### Hiding code chunks
 
 If you don't want the code of a particular code chunk to appear in the final document, but still want to show the output (e.g. a plot), then you can include `echo = FALSE` in the code chunk instructions: `{r, echo = FALSE}`. 
+
+````
+```{r, echo = FALSE}`r ''
+A <- c("a", "a", "b", "b")
+B <- c(5, 10, 15, 20)
+dataframe <- data.frame(A, B)
+plot(dataframe)
+```
+````
+
 Similarly, you might want to create an object, but not include both the code and the output in the final `.html` file.
 To do this you can use, `include = FALSE`: `{r, include = FALSE}`. 
+
+````
+```{r, include = FALSE}`r ''`
+A <- c("a", "a", "b", "b")
+B <- c(5, 10, 15, 20)
+dataframe <- data.frame(A, B)
+plot(dataframe)
+```
+````
+
 Be aware though, when making reproducible research it's often not a good idea to completely hide some part of your analysis!
 In some cases, when you load packages into `RStudio`, various warning messages such as _"Warning: package ‘dplyr’ was built under R version 3.4.4"_ might appear. 
 If you do not want these warning messages to appear, you can use `warning = FALSE`: `{r, warning = FALSE}`.
+
+
+````
+```{r, warning = FALSE}`r ''`
+library(dplyr)
+```
+````
 
 **REMEMBER**: R Markdown does not pay attention to anything you have loaded in other R scripts, you MUST load all objects and packages in the R Markdown script.
 
@@ -223,13 +254,15 @@ Inserting a graph into RMarkdown is easy, the more energy-demanding aspect might
 
 By default, RMarkdown will place graphs by maximising their height, while keeping them within the margins of the page and maintaining aspect ratio. If you have a particularly tall figure, this can mean a really huge graph. In the following example we modify the dimensions of the figure we created above. To manually set the figure dimensions, you can insert an instruction into the curly braces: `{r, fig.width = 4, fig.height = 3, }`.
 
-```{r, fig.width = 4, fig.height = 3, }
+
+````
+```{r, fig.width = 4, fig.height = 3, }`r ''`
 A <- c("a", "a", "b", "b")
 B <- c(5, 10, 15, 20)
 dataframe <- data.frame(A, B)
 plot(dataframe)
 ```
-
+````
 
 #### Inserting Tables
 
@@ -237,9 +270,11 @@ plot(dataframe)
 
 While R Markdown can print the contents of a data frame easily by enclosing the name of the data frame in a code chunk:
 
-```{r}
+````
+```{r}`r ''`
 dataframe
 ```
+````
 
 This can look a bit messy, especially with data frames with a lot of columns. Including a formal table requires more effort.
 
@@ -247,17 +282,20 @@ This can look a bit messy, especially with data frames with a lot of columns. In
 
 The most aesthetically pleasing and simple table formatting function I have found is `kable()` in the `knitr` package. The first argument tells kable to make a table out of the object `dataframe` and that numbers should have two significant figures. Remember to load the `knitr` package in your `.Rmd` file as well.
 
-```{r, eval=F}
+````
+```{r}`r ''`
 # Don't forget to run: install.packages("knitr") before!
 library(knitr)
 kable(dataframe, digits = 2)
 ```
+````
 
 #### Creating tables from model outputs 
 
 Using `tidy()` from the package `broom`, we are able to create tables of our model outputs, and insert these tables into our  markdown file. The example below shows a simple example linear model, where the summary output table can be saved as a new R object and then added into the markdown file. 
 
-```{r, warning = FALSE}
+````
+```{r}`r ''`
 library(broom)
 library(pander)
 A <- c(20, 15, 10)
@@ -267,8 +305,9 @@ lm_test <- lm(A ~ B)            # Creating linear model
 summary(lm_test)                # Obtaining linear model summary statistics
 
 table_obj <- tidy(lm_test)      # Using tidy() to create a new R object called table 
-pander(table_obj, digits = 3)   # Using pander() to view the created table, with 3 sig figs  
+pander(table_obj, digits = 3)   # Using pander() to view the created table, with 3 sig figs 
 ```
+````
 
 #### Formatting Text
 
