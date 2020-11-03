@@ -55,13 +55,14 @@ library(amcatr) #have you installed this library last time?
 conn <- amcat.connect('http://vucw.amcat.nl')
 d <- amcat.hits(conn, queries = 'europe', labels = 'eu', sets = 21, 
                 project = 1, col = c('date','medium','headline','text')) 
+#Check project number and article set number by logging in on http://vucw.amcat.nl/
 #do note the " within the ' to connect the two words and  NOT search for health AND care
 ```
 
 Do remind that in order to login, we need to tell R your credentials. 
 So if you didn't do it last week, or work on a different computer, don't forget to run:
 ```{r, eval=FALSE}
-amcat.save.password("http://vucw.amcat.nl", username="GROUP + NUMBER", password="GROUP + NUMBER")
+amcat.save.password("http://vucw.amcat.nl", username="team + number (e.g. team01)", password="team + number (e.g. team01)")
 ```
 
 To conduct the sentiment analysis using a dictionary, we have to create a document-term matrix (DTM), for more information about DTM, [see the tutorial on basic text analysis with quanteda](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/R_text_3_quanteda.md).

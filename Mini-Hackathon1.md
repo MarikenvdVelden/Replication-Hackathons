@@ -55,6 +55,7 @@ library(amcatr) #have you installed this library last time?
 conn <- amcat.connect('http://vucw.amcat.nl')
 d <- amcat.hits(conn, queries = 'europe', labels = 'eu', sets = 21, 
                 project = 1, col = c('date','medium','headline','text')) 
+#Check project number and article set number by logging in on http://vucw.amcat.nl/
 #do note the " within the ' to connect the two words and  NOT search for health AND care
 ```
 
@@ -64,7 +65,7 @@ forget to
 run:
 
 ``` r
-amcat.save.password("http://vucw.amcat.nl", username="GROUP + NUMBER", password="GROUP + NUMBER")
+amcat.save.password("http://vucw.amcat.nl", username="team + number (e.g. team01)", password="team + number (e.g. team01)")
 ```
 
 To conduct the sentiment analysis using a dictionary, we have to create
@@ -150,11 +151,13 @@ cor(result$sentiment1, result2$sentiment2)
 3.  Reflect on the validity of the current analysis, both at the level
     of specific hits and at an aggregate level. For the validity of
     specific hits, look at the `Key-Word-In-Context` listings for the 20
-    first hits. Do the sentiment words correctly relate to the sentiment
-    with which your concept is discussed (note: only focus on the words
-    between angle brackets)? If the specific hits do not accurately
-    measure sentiment, do you think the aggregate results are still
-    usefull in your case?
+    first hits, as discussed in the [sentiment
+    tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md).
+    Do the sentiment words correctly relate to the sentiment with which
+    your concept is discussed (note: only focus on the words between
+    angle brackets)? If the specific hits do not accurately measure
+    sentiment, do you think the aggregate results are still usefull in
+    your case?
 
 4.  The method used in the tutorial is pretty crude. Even for dictionary
     methods, there are ways to improve results. Can you think of any
