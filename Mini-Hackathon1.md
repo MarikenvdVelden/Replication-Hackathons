@@ -199,7 +199,7 @@ ggplot(df, mapping = aes(x = date, y = sentiment1)) +
 If you use another dictionary, would you get the same results? [Recent
 work by Wouter van Atteveldt, Mariken van der Velden, and Mark Boukes
 shows that the results of sentiment analysis vastly differ between
-dictionaries.](https://github.com/vanatteveldt/ecosent) perform a
+dictionaries.](https://github.com/vanatteveldt/ecosent) Conduct a second
 sentiment analysis using another dictionary from
 `quanteda.dictionaries`. Check and interpret the correlation between the
 sentiment analysis of the two different dictionaries. I have added the
