@@ -203,8 +203,9 @@ cor(result_AFINN$sentiment1, result_GENINQ$sentiment1)
     ## [1] 0.5123131
 
 To understand the outcome of the correlation better, it can be useful to
-visualize the over time trends of sentiment on the economy reported in
-the Guardian based on both dictionaries.
+visualize the over time trends of sentiment on the European Union
+reported in the news on the presidential candidates for both
+dictionaries.
 
 ``` r
 df <- result_AFINN %>%
