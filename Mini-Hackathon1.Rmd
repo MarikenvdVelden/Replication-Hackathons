@@ -32,7 +32,7 @@ If you aim to conduct additional analyses in R, we of course encourage this.
 Nevertheless, it is important to not do additional analysis just for the sake of running more code chunks. 
 For that reason, please provide a justification for these additional analyses.
 
-Also, we recommend to use parameters for RMarkdown codeblocks, in particular the `cache = T` parameter for codeblocks that take long to compute (e.g., downloading data from AmCAT). 
+Also, we recommend to use parameters for RMarkdown codeblocks, in particular the `cache = TRUE` parameter for codeblocks that take long to compute (e.g., downloading data from AmCAT). 
 A brief explanation of some usefull parameters is given in the [the tutorial of last week](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md).
 
 Important to take into account is that this week you laptop will be doing the heavy lifting. 
@@ -45,15 +45,15 @@ To get the data, one can run the following code to download the data from AmCAT 
 For example, if one ones to know what the presidential candidates say about the European Uninion, you can run the code chunk below.
 If you are interested in another political issue, you can adapt the query.
 
-```{r, echo=FALSE, message=F}
+```{r, echo=FALSE, message=F, warning=F}
 library(amcatr) #have you installed this library last time?
 amcat.save.password("http://vucw.amcat.nl", username = "amcat", password = "amcat")
 ```
-```{r, warning=FALSE, cache = T, message=F, eval=F}
+```{r, warning=FALSE, cache = T, message=F}
 library(amcatr) #have you installed this library last time?
 
 conn <- amcat.connect('http://vucw.amcat.nl')
-d <- amcat.hits(conn, queries = 'europe', labels = 'eu', sets = 21, 
+d <- amcat.hits(conn, queries = '"european union"', labels = 'eu', sets = 21, 
                 project = 1, col = c('date','medium','headline','text')) 
 #Check project number and article set number by logging in on http://vucw.amcat.nl/
 #do note the " within the ' to connect the two words and  NOT search for health AND care
@@ -61,13 +61,48 @@ d <- amcat.hits(conn, queries = 'europe', labels = 'eu', sets = 21,
 
 Do remind that in order to login, we need to tell R your credentials. 
 So if you didn't do it last week, or work on a different computer, don't forget to run:
+
 ```{r, eval=FALSE}
 amcat.save.password("http://vucw.amcat.nl", username="team + number (e.g. team01)", password="team + number (e.g. team01)")
 ```
 
+```{r, eval=F, message=F, warning=F, include=F}
+#To do so, we will work with the AmCAT data set on the US presidential candidates in 2020.
+#To get the data, one can run the following code to download the data from AmCAT for the political issue you aim to study.
+#For example, if one ones to know what the presidential candidates say about the European Uninion, you can run the code chunk below.
+#If you are interested in another political issue, you can adapt the query.
+devtools::install_github("quanteda/quanteda.corpora")
+library(quanteda.corpora)
+
+corp <- download('data_corpus_guardian')
+```
+
+```{r, message=F, warning=FALSE, cache=TRUE, include=FALSE}
+library(quanteda.corpora)
+corp <- download('data_corpus_guardian')
+```
+
+```{r, message=FALSE, warning=FALSE, eval=FALSE, include=FALSE}
+#In a next step, you need to query the data for the political issue you aim to study.
+#For example, if one ones to know what how the Guardian reports on the economy, you can run the code chunk below.
+#3If you are interested in another political issue, you can adapt the query.
+library(quanteda)
+q  <- grepl('econom', texts(corp), ignore.case = T)
+econ_news <- corpus_subset(corp, q)
+
+```
+
 To conduct the sentiment analysis using a dictionary, we have to create a document-term matrix (DTM), for more information about DTM, [see the tutorial on basic text analysis with quanteda](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/R_text_3_quanteda.md).
 
-```{r, eval=F}
+```{r, eval=F, include=FALSE}
+#the data is already in corpus format so we can create a dtm
+dtm <- econ_news %>% 
+        dfm(remove = stopwords("english"), remove_punct = T) %>% 
+        dfm_trim(min_docfreq = 5)
+dtm
+```
+
+```{r, warning=F, message=FALSE, cache=T}
 library(quanteda) #Have you installed the package? If not, use install.packages("quanteda")
 
 #First: create a corpus
@@ -98,45 +133,102 @@ library(quanteda.dictionaries)
 ```
 
 Choose a dictionary from `quanteda.dictionaries` and run this over the news articles collected from AmCAT.
-```{r,message=F, warning=F, eval=F}
+```{r,message=F, warning=F}
 AFINN_dict <- dictionary(data_dictionary_AFINN)
 
-(result <- dtm %>% 
+result_AFINN <- dtm %>% 
   dfm_lookup(AFINN_dict) %>% 
   convert(to = "data.frame") %>% 
-  as_tibble)
+  as_tibble
+
+head(result_AFINN)
 ```
 
 Subsequently normalize the length of documents and compute a sort of overall sentiment score.
 
-```{r,message=F, warning=F, eval=F, include=F}
-(result <- result %>% 
+```{r,message=F, warning=F, include=F}
+result_AFINN <- result_AFINN %>% 
   mutate(length = ntoken(dtm),
          sentiment1 = (positive - negative) / (positive + negative),
          sentiment2 = (positive - negative) / length,
-         subjectivity = (positive + negative) / length)))
+         subjectivity = (positive + negative) / length)
 ```
 
 Visualize the results of the sentiment analysis using the code below.
+You can go wild with [colors](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf), if you like.
 Use an aggregation level (days, weeks, months) that makes sense to you, and interpret the results. You are recommended to use multiple codeblocks, and to use `cache = T` where usefull.
 
-```{r, eval=F, message=F,warning=F}
+```{r, message=F,warning=F}
+# Add date variable to results
+result_AFINN <- result_AFINN %>%
+  mutate(date = as.Date(docvars(corp, "date")),
+         id = "AFINN")
+
+#Aggregate to the month level
+library(tidyquant)
+df <- result_AFINN %>%
+    tq_transmute(select     = sentiment1,
+                 mutate_fun = apply.weekly, #or apply.monthly for week level
+                 FUN        = sum)
+head(df)
+
 library(tidyverse)
-ggplot(result, mapping = aes(x = week, y = senitment1)) +
+ggplot(df, mapping = aes(x = date, y = sentiment1)) +
   geom_line(color = "seagreen") +
   labs(x = "", y = "Sentiment Score", 
-       title= "Tone of US Presidential Canidates on Europe") +
-  theme(plot.title = element_text(hjust = 0.5)) + #to center the title of the plot
-  theme_minimal()
+       title= "Tone of Guardian on Economy") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) #to center the title of the plot
 ```
 
 b. If you use another dictionary, would you get the same results? 
 [Recent work by Wouter van Atteveldt, Mariken van der Velden, and Mark Boukes shows that the results of sentiment analysis vastly differ between dictionaries.](https://github.com/vanatteveldt/ecosent)
 perform a sentiment analysis using another dictionary from `quanteda.dictionaries`. 
 Check and interpret the correlation between the sentiment analysis of the two different dictionaries.
+I have added the `data_dictionary_geninqposneg` dictionary.
 
-```{r, eval=F, message=F, warning=F}
-cor(result$sentiment1, result2$sentiment2)
+```{r,message=F, warning=F, include=F}
+GENINQ_dict <- dictionary(data_dictionary_geninqposneg)
+
+result_GENINQ <- dtm %>% 
+  dfm_lookup(GENINQ_dict) %>% 
+  convert(to = "data.frame") %>% 
+  as_tibble
+
+result_GENINQ <- result_GENINQ %>% 
+  mutate(length = ntoken(dtm),
+         sentiment1 = (positive - negative) / (positive + negative),
+         sentiment2 = (positive - negative) / length,
+         subjectivity = (positive + negative) / length,
+         date = as.Date(docvars(corp, "date")),
+         id = "GENINQ")
+
+```
+
+```{r, message=F, warning=F}
+cor(result_AFINN$sentiment1, result_GENINQ$sentiment1)
+```
+
+To understand the outcome of the correlation better, it can be useful to visualize the over time trends of sentiment on the economy reported in the Guardian based on both dictionaries. 
+
+```{r, message=F, warning=F}
+df <- result_AFINN %>%
+  add_row(result_GENINQ) %>%
+  group_by(id) %>%
+    tq_transmute(select     = c(sentiment1),
+                 mutate_fun = apply.monthly, #or apply.weekly for week level
+                 FUN        = sum)
+#head(df)
+
+ggplot(df, mapping = aes(x = date, y = sentiment1, group = id, colour = id)) +
+  geom_line() +
+  labs(x = "", y = "Sentiment Score", 
+       title= "Tone of Guardian on Economy") +
+  theme_minimal() +
+  scale_color_manual(values=c("seagreen", "violet")) +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.title=element_blank(), #edit the legend
+        legend.position = "bottom") #to center the title of the plot
 ```
 
 c. Reflect on the validity of the current analysis, both at the level of specific hits and at an aggregate level. For the validity of specific hits, look at the `Key-Word-In-Context` listings for the 20 first hits, as discussed in the [sentiment tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md). Do the sentiment words correctly relate to the sentiment with which your concept is discussed (note: only focus on the words between angle brackets)? If the specific hits do not accurately measure sentiment, do you think the aggregate results are still usefull in your case?

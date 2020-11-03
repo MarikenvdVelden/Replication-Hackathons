@@ -27,7 +27,7 @@ sake of running more code chunks. For that reason, please provide a
 justification for these additional analyses.
 
 Also, we recommend to use parameters for RMarkdown codeblocks, in
-particular the `cache = T` parameter for codeblocks that take long to
+particular the `cache = TRUE` parameter for codeblocks that take long to
 compute (e.g., downloading data from AmCAT). A brief explanation of some
 usefull parameters is given in the [the tutorial of last
 week](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md).
@@ -53,7 +53,7 @@ carefull not to choose a concept that has too many articles.
 library(amcatr) #have you installed this library last time?
 
 conn <- amcat.connect('http://vucw.amcat.nl')
-d <- amcat.hits(conn, queries = 'europe', labels = 'eu', sets = 21, 
+d <- amcat.hits(conn, queries = '"european union"', labels = 'eu', sets = 21, 
                 project = 1, col = c('date','medium','headline','text')) 
 #Check project number and article set number by logging in on http://vucw.amcat.nl/
 #do note the " within the ' to connect the two words and  NOT search for health AND care
@@ -86,6 +86,17 @@ dtm <- corp %>%
 dtm
 ```
 
+    ## Document-feature matrix of: 1,419 documents, 26,942 features (96.4% sparse) and 5 docvars.
+    ##      features
+    ## docs  6.01pm gmt going bring blog close now us politics live
+    ##   26       1  63     3     5    2     4   9 61        2    2
+    ##   135      0   0     0     0    0     0   4 14        0    0
+    ##   145      0  33     1     0    0     0   4 18        0    0
+    ##   158      0  45     6     0    2     7   9  5        5    1
+    ##   305      0  56    13     3    1     3   9 13        3    4
+    ##   310      0   0     0     0    0     1   0  7        1    0
+    ## [ reached max_ndoc ... 1,413 more documents, reached max_nfeat ... 26,932 more features ]
+
 We will work with the dictionaries implemented in an additional package
 of quanteda. To be able to use this extension, make sure to install the
 development version, because it inlcudes features that are not yet on
@@ -109,29 +120,68 @@ news articles collected from AmCAT.
 ``` r
 AFINN_dict <- dictionary(data_dictionary_AFINN)
 
-(result <- dtm %>% 
+result_AFINN <- dtm %>% 
   dfm_lookup(AFINN_dict) %>% 
   convert(to = "data.frame") %>% 
-  as_tibble)
+  as_tibble
+
+head(result_AFINN)
 ```
+
+| document | negative | positive |
+| :------- | -------: | -------: |
+| 26       |      297 |      120 |
+| 135      |       13 |       10 |
+| 145      |       96 |      110 |
+| 158      |      134 |      180 |
+| 305      |      168 |      258 |
+| 310      |       44 |       20 |
 
 Subsequently normalize the length of documents and compute a sort of
 overall sentiment score.
 
 Visualize the results of the sentiment analysis using the code below.
-Use an aggregation level (days, weeks, months) that makes sense to you,
-and interpret the results. You are recommended to use multiple
+You can go wild with
+[colors](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf), if you
+like. Use an aggregation level (days, weeks, months) that makes sense to
+you, and interpret the results. You are recommended to use multiple
 codeblocks, and to use `cache = T` where usefull.
 
 ``` r
+# Add date variable to results
+result_AFINN <- result_AFINN %>%
+  mutate(date = as.Date(docvars(corp, "date")),
+         id = "AFINN")
+
+#Aggregate to the month level
+library(tidyquant)
+df <- result_AFINN %>%
+    tq_transmute(select     = sentiment1,
+                 mutate_fun = apply.weekly, #or apply.monthly for week level
+                 FUN        = sum)
+head(df)
+```
+
+| date       |  sentiment1 |
+| :--------- | ----------: |
+| 2020-01-05 | \-1.0524540 |
+| 2020-01-12 | \-2.6452389 |
+| 2020-01-19 |   6.4477295 |
+| 2020-01-26 |   3.0865824 |
+| 2020-02-02 |  10.0503521 |
+| 2020-02-09 |   0.8135491 |
+
+``` r
 library(tidyverse)
-ggplot(result, mapping = aes(x = week, y = senitment1)) +
+ggplot(df, mapping = aes(x = date, y = sentiment1)) +
   geom_line(color = "seagreen") +
   labs(x = "", y = "Sentiment Score", 
-       title= "Tone of US Presidential Canidates on Europe") +
-  theme(plot.title = element_text(hjust = 0.5)) + #to center the title of the plot
-  theme_minimal()
+       title= "Tone of Guardian on Economy") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0.5)) #to center the title of the plot
 ```
+
+![](Mini-Hackathon1_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
 2.  If you use another dictionary, would you get the same results?
     [Recent work by Wouter van Atteveldt, Mariken van der Velden, and
@@ -140,13 +190,42 @@ ggplot(result, mapping = aes(x = week, y = senitment1)) +
     dictionaries.](https://github.com/vanatteveldt/ecosent) perform a
     sentiment analysis using another dictionary from
     `quanteda.dictionaries`. Check and interpret the correlation between
-    the sentiment analysis of the two different dictionaries.
+    the sentiment analysis of the two different dictionaries. I have
+    added the `data_dictionary_geninqposneg` dictionary.
 
 <!-- end list -->
 
 ``` r
-cor(result$sentiment1, result2$sentiment2)
+cor(result_AFINN$sentiment1, result_GENINQ$sentiment1)
 ```
+
+    ## [1] 0.5123131
+
+To understand the outcome of the correlation better, it can be useful to
+visualize the over time trends of sentiment on the economy reported in
+the Guardian based on both dictionaries.
+
+``` r
+df <- result_AFINN %>%
+  add_row(result_GENINQ) %>%
+  group_by(id) %>%
+    tq_transmute(select     = c(sentiment1),
+                 mutate_fun = apply.monthly, #or apply.weekly for week level
+                 FUN        = sum)
+#head(df)
+
+ggplot(df, mapping = aes(x = date, y = sentiment1, group = id, colour = id)) +
+  geom_line() +
+  labs(x = "", y = "Sentiment Score", 
+       title= "Tone of Guardian on Economy") +
+  theme_minimal() +
+  scale_color_manual(values=c("seagreen", "violet")) +
+  theme(plot.title = element_text(hjust = 0.5),
+        legend.title=element_blank(), #edit the legend
+        legend.position = "bottom") #to center the title of the plot
+```
+
+![](Mini-Hackathon1_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
 3.  Reflect on the validity of the current analysis, both at the level
     of specific hits and at an aggregate level. For the validity of

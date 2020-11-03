@@ -8,3 +8,5 @@ jsonlite
 httr
 dplyr
 amcatr
+quanteda.corpora
+quanteda
