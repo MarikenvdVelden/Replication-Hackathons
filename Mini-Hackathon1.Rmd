@@ -49,7 +49,7 @@ If you are interested in another political issue, you can adapt the query.
 library(amcatr) #have you installed this library last time?
 amcat.save.password("http://vucw.amcat.nl", username = "amcat", password = "amcat")
 ```
-```{r, warning=FALSE, cache = T, message=F}
+```{r, warning=FALSE, cache = F, message=F}
 library(amcatr) #have you installed this library last time?
 
 conn <- amcat.connect('http://vucw.amcat.nl')
@@ -155,6 +155,11 @@ result_AFINN <- result_AFINN %>%
 ```
 
 Visualize the results of the sentiment analysis using the code below.
+**NOTE**: the code chunck below assumes that you have created a sentiment variable yourself, in the example I have called the variable `sentiment1`.
+If you rename your sentiment variable differently, change the code accordingly.
+My sentiment variable uses the following code from the [sentiment tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md): `mutate(sentiment1=(positive - negative) / (positive + negative))`.
+You can use a different way to calculate the sentiment, but be aware that depending on the method that you use to calculate sentiment, the result might differ from the results you see here in this file. 
+
 You can go wild with [colors](http://www.stat.columbia.edu/~tzheng/files/Rcolor.pdf), if you like.
 Use an aggregation level (days, weeks, months) that makes sense to you, and interpret the results. You are recommended to use multiple codeblocks, and to use `cache = T` where usefull.
 
