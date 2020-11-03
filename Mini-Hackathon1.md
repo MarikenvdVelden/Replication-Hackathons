@@ -44,7 +44,7 @@ Choose a political issue and perform a sentiment analysis. To do so, we
 will work with the AmCAT data set on the US presidential candidates in
 2020. To get the data, one can run the following code to download the
 data from AmCAT for the political issue you aim to study. For example,
-if one want to know what the presidential candidates say about the
+if one wants to know what the presidential candidates say about the
 European Union, you can run the code chunk below. If you are interested
 in another political issue, you can adapt the query.
 
