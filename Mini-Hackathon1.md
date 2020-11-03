@@ -176,7 +176,7 @@ library(tidyverse)
 ggplot(df, mapping = aes(x = date, y = sentiment1)) +
   geom_line(color = "seagreen") +
   labs(x = "", y = "Sentiment Score", 
-       title= "Tone of Guardian on Economy") +
+       title= "Tone of Presidential Candidates on European Union") +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5)) #to center the title of the plot
 ```
@@ -210,14 +210,14 @@ df <- result_AFINN %>%
   add_row(result_GENINQ) %>%
   group_by(id) %>%
     tq_transmute(select     = c(sentiment1),
-                 mutate_fun = apply.monthly, #or apply.weekly for week level
+                 mutate_fun = apply.weekly, #or apply.monthly for week level
                  FUN        = sum)
 #head(df)
 
 ggplot(df, mapping = aes(x = date, y = sentiment1, group = id, colour = id)) +
   geom_line() +
   labs(x = "", y = "Sentiment Score", 
-       title= "Tone of Guardian on Economy") +
+       title= "Tone of Presidential Candidates on European Union") +
   theme_minimal() +
   scale_color_manual(values=c("seagreen", "violet")) +
   theme(plot.title = element_text(hjust = 0.5),
