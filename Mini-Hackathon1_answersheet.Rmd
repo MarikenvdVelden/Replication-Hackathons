@@ -39,7 +39,8 @@ Important to take into account is that this week you laptop will be doing the he
 Accordingly, in the assignment, you should be carefull not to choose a concept that has too many articles. 
 
 ### Hackathon Challenges
-a. _Choose a political issue and perform a sentiment analysis._ 
+#### Challenge 1
+ _Choose a political issue and perform a sentiment analysis._ 
 _Visualize the results of the sentiment analysis based onan aggregation level (days, weeks, months) that makes sense to you, and interpret the results._ 
 _You are recommended to use multiple codeblocks, and to use `cache = T` where usefull._
 
@@ -49,14 +50,15 @@ _You are recommended to use multiple codeblocks, and to use `cache = T` where us
 ```
 
 
-
-b. _If you would use another dictionary, do you get the same results?_
+#### Challenge 2
+ _If you would use another dictionary, do you get the same results?_
 _[Recent work by Wouter van Atteveldt, Mariken van der Velden, and Mark Boukes shows that the results of sentiment analysis vastly differ between dictionaries.](\url{https://github.com/vanatteveldt/ecosent})_
 _Check the correlations beteen the two results._
 _You are recommended to use multiple codeblocks, and to use `cache = T` where usefull._
 
-
-c. _Reflect on the validity of the current analysis, both at the level of specific hits and at an aggregate level._
+#### Challenge 3
+_Reflect on the validity of the current analysis, both at the level of specific hits and at an aggregate level._
 _For the validity of specific hits, look at the Key-Word-In-Context listings for the 20 first hits._ _Do the sentiment words correctly relate to the sentiment with which your concept is discussed (note: only focus on the words between angle brackets)? If the specific hits do not accurately measure sentiment, do you think the aggregate results are still usefull in your case?_
 
-d. _The method used in the tutorial is pretty crude. Even for dictionary methods, there are ways to improve results. Can you think of any problem in particular, and any ways to mend them? Are there problems which cannot be solved, or would be very hard to solve?_
+#### Challenge 4
+_The method used in the tutorial is pretty crude. Even for dictionary methods, there are ways to improve results. Can you think of any problem in particular, and any ways to mend them? Are there problems which cannot be solved, or would be very hard to solve?_
