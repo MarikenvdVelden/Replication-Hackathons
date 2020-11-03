@@ -138,7 +138,8 @@ head(result_AFINN)
 | 310      |       44 |       20 |
 
 Subsequently normalize the length of documents and compute a sort of
-overall sentiment score.
+overall sentiment score as explained in the [sentiment
+tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md).
 
 Visualize the results of the sentiment analysis using the code below.
 You can go wild with
