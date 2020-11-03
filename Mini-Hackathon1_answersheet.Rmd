@@ -1,0 +1,62 @@
+---
+layout: tutorial
+title: 'Mini-Hackathon 1: Sentiment Analysis'
+author: "Mariken van der Velden & Kasper Welbers"
+output:
+  github_document:
+  toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+  
+```{r setup, include=FALSE}
+## include this at top of your RMarkdown file for pretty output
+## make sure to have the printr package installed: install.packages('printr')
+knitr::opts_chunk$set(echo = TRUE)
+library(printr)
+library(rmarkdown)
+```
+
+Mini-Hackathons are performed and submitted in pairs of two. 
+You must hand in your assignment on Canvas the next week before **Tuesday Midnight**.
+
+Use this RMarkdown template on the canvas page for this mini-hackathon to complete your hackathon.
+When you are finished, knit the file into a pdf with the knit button in the toolbar (or using Ctrl+Shift+K).
+For this you need to have the `knitr` and `printr` packages installed, and all your code needs to work (see the R course companion for more instructions).
+If you cannot knit the `.Rmd` file, there is probably an error in your R code, therefore add `eval=FALSE` to the code chunk: `{r, eval = FALSE}`, so you are still able to knit and upload the file.
+
+# This Mini-Hackathon
+This mini-hackathon builds upon the tutorial on [sentiment analysis](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md). 
+For this hackathon, you can (and are strongly recommended to) use code from this week's tutorial as well as provided here.
+If you aim to conduct additional analyses in R, we of course encourage this.
+Nevertheless, it is important to not do additional analysis just for the sake of running more code chunks. 
+For that reason, please provide a justification for these additional analyses.
+
+Also, we recommend to use parameters for RMarkdown codeblocks, in particular the `cache = T` parameter for codeblocks that take long to compute (e.g., downloading data from AmCAT). 
+A brief explanation of some usefull parameters is given in the [the tutorial of last week](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md).
+
+Important to take into account is that this week you laptop will be doing the heavy lifting. 
+Accordingly, in the assignment, you should be carefull not to choose a concept that has too many articles. 
+
+### Hackathon Challenges
+a. _Choose a political issue and perform a sentiment analysis._ 
+_Visualize the results of the sentiment analysis based onan aggregation level (days, weeks, months) that makes sense to you, and interpret the results._ 
+_You are recommended to use multiple codeblocks, and to use `cache = T` where usefull._
+
+
+```{r, echo=FALSE, message=F}
+
+```
+
+
+
+b. _If you would use another dictionary, do you get the same results?_
+_[Recent work by Wouter van Atteveldt, Mariken van der Velden, and Mark Boukes shows that the results of sentiment analysis vastly differ between dictionaries.](\url{https://github.com/vanatteveldt/ecosent})_
+_Check the correlations beteen the two results._
+_You are recommended to use multiple codeblocks, and to use `cache = T` where usefull._
+
+
+c. _Reflect on the validity of the current analysis, both at the level of specific hits and at an aggregate level._
+_For the validity of specific hits, look at the Key-Word-In-Context listings for the 20 first hits._ _Do the sentiment words correctly relate to the sentiment with which your concept is discussed (note: only focus on the words between angle brackets)? If the specific hits do not accurately measure sentiment, do you think the aggregate results are still usefull in your case?_
+
+d. _The method used in the tutorial is pretty crude. Even for dictionary methods, there are ways to improve results. Can you think of any problem in particular, and any ways to mend them? Are there problems which cannot be solved, or would be very hard to solve?_

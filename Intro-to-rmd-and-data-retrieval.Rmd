@@ -51,9 +51,9 @@ library(rmarkdown)
 ### Assignment: Create an RMarkdown file
 To create a new RMarkdown file (.Rmd), select `File -> New File -> R Markdown...` in `RStudio`, then choose the file type you want to create. 
 For now we will focus on a .html Document, which can be easily converted to other file types later.
-The newly created .Rmd file comes with basic instructions, but we want to create our own RMarkdown script, so go ahead and delete everything in the example file.
+The newly created .Rmd file comes with basic instructions, so try to run your first `.RMd` file by knitting the `.Rmd` file into an `.html` file.
 
-Now open your Rscript of _Media monitoring opdracht 2_ of the _Nieuwsdynamiek in de Digitale Samenleving_ and use the instructions below to help you convert this script into a coherent RMarkdown document, bit by bit.
+Second, we want to create our own RMarkdown script, so go ahead and delete everything in the example file. Now open your Rscript of _Media monitoring opdracht 2_ of the _Nieuwsdynamiek in de Digitale Samenleving_ and use the instructions below to help you convert this script into a coherent RMarkdown document, bit by bit.
 If you have any of your own R scripts that you would like to make into an R Markdown document, you can also use those!
 
 ### Assignment: Add a YAML Header

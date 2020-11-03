@@ -1,0 +1,143 @@
+---
+layout: tutorial
+title: 'Mini-Hackathon 1: Sentiment Analysis'
+author: "Mariken van der Velden & Kasper Welbers"
+output:
+  github_document:
+  toc: yes
+editor_options: 
+  chunk_output_type: console
+---
+  
+```{r setup, include=FALSE}
+## include this at top of your RMarkdown file for pretty output
+## make sure to have the printr package installed: install.packages('printr')
+knitr::opts_chunk$set(echo = TRUE)
+library(printr)
+library(rmarkdown)
+```
+
+Mini-Hackathons are performed and submitted in pairs of two. 
+You must hand in your assignment on Canvas the next week before **Tuesday Midnight**.
+
+Use this RMarkdown template on the canvas page for this mini-hackathon to complete your hackathon.
+When you are finished, knit the file into a pdf with the knit button in the toolbar (or using Ctrl+Shift+K).
+For this you need to have the `knitr` and `printr` packages installed, and all your code needs to work (see the R course companion for more instructions).
+If you cannot knit the `.Rmd` file, there is probably an error in your R code, therefore add `eval=FALSE` to the code chunk: `{r, eval = FALSE}`, so you are still able to knit and upload the file.
+
+# This Mini-Hackathon
+This mini-hackathon builds upon the tutorial on [sentiment analysis](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md). 
+For this hackathon, you can (and are strongly recommended to) use code from this week's tutorial as well as provided here.
+If you aim to conduct additional analyses in R, we of course encourage this.
+Nevertheless, it is important to not do additional analysis just for the sake of running more code chunks. 
+For that reason, please provide a justification for these additional analyses.
+
+Also, we recommend to use parameters for RMarkdown codeblocks, in particular the `cache = T` parameter for codeblocks that take long to compute (e.g., downloading data from AmCAT). 
+A brief explanation of some usefull parameters is given in the [the tutorial of last week](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md).
+
+Important to take into account is that this week you laptop will be doing the heavy lifting. 
+Accordingly, in the assignment, you should be carefull not to choose a concept that has too many articles. 
+
+### Hackathon Challenges
+a. Choose a political issue and perform a sentiment analysis. 
+To do so, we will work with the AmCAT data set on the US presidential candidates in 2020.
+To get the data, one can run the following code to download the data from AmCAT for the political issue you aim to study.
+For example, if one ones to know what the presidential candidates say about the European Uninion, you can run the code chunk below.
+If you are interested in another political issue, you can adapt the query.
+
+```{r, echo=FALSE, message=F}
+library(amcatr) #have you installed this library last time?
+amcat.save.password("http://vucw.amcat.nl", username = "amcat", password = "amcat")
+```
+```{r, warning=FALSE, cache = T, message=F, eval=F}
+library(amcatr) #have you installed this library last time?
+
+conn <- amcat.connect('http://vucw.amcat.nl')
+d <- amcat.hits(conn, queries = 'europe', labels = 'eu', sets = 21, 
+                project = 1, col = c('date','medium','headline','text')) 
+#do note the " within the ' to connect the two words and  NOT search for health AND care
+```
+
+Do remind that in order to login, we need to tell R your credentials. 
+So if you didn't do it last week, or work on a different computer, don't forget to run:
+```{r, eval=FALSE}
+amcat.save.password("http://vucw.amcat.nl", username="GROUP + NUMBER", password="GROUP + NUMBER")
+```
+
+To conduct the sentiment analysis using a dictionary, we have to create a document-term matrix (DTM), for more information about DTM, [see the tutorial on basic text analysis with quanteda](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/R_text_3_quanteda.md).
+
+```{r, eval=F}
+library(quanteda) #Have you installed the package? If not, use install.packages("quanteda")
+
+#First: create a corpus
+corp <- corpus(d, docid_field = 'id', text_field = 'text')
+
+#Next: we can create a dtm
+dtm <- corp %>% 
+        dfm(remove = stopwords("english"), remove_punct = T) %>% 
+        dfm_trim(min_docfreq = 5)
+dtm
+```
+
+We will work with the dictionaries implemented in an additional package of quanteda.
+To be able to use this extension, make sure to install the development version, because it inlcudes features that are not yet on the released CRAN version.
+Please run:
+
+```{r, eval=F, message=F, warning=F}
+devtools::install_github("kbenoit/quanteda.dictionaries") 
+```
+
+Thereafter, load the dictionary and inspect which dictionaries are included in this package: 
+```{r, message=F, warning=F, include=F}
+library(quanteda.dictionaries)
+```
+```{r, message=F, warning=F, eval=F}
+library(quanteda.dictionaries)
+?`quanteda.dictionaries-package`
+```
+
+Choose a dictionary from `quanteda.dictionaries` and run this over the news articles collected from AmCAT.
+```{r,message=F, warning=F, eval=F}
+AFINN_dict <- dictionary(data_dictionary_AFINN)
+
+(result <- dtm %>% 
+  dfm_lookup(AFINN_dict) %>% 
+  convert(to = "data.frame") %>% 
+  as_tibble)
+```
+
+Subsequently normalize the length of documents and compute a sort of overall sentiment score.
+
+```{r,message=F, warning=F, eval=F, include=F}
+(result <- result %>% 
+  mutate(length = ntoken(dtm),
+         sentiment1 = (positive - negative) / (positive + negative),
+         sentiment2 = (positive - negative) / length,
+         subjectivity = (positive + negative) / length)))
+```
+
+Visualize the results of the sentiment analysis using the code below.
+Use an aggregation level (days, weeks, months) that makes sense to you, and interpret the results. You are recommended to use multiple codeblocks, and to use `cache = T` where usefull.
+
+```{r, eval=F, message=F,warning=F}
+library(tidyverse)
+ggplot(result, mapping = aes(x = week, y = senitment1)) +
+  geom_line(color = "seagreen") +
+  labs(x = "", y = "Sentiment Score", 
+       title= "Tone of US Presidential Canidates on Europe") +
+  theme(plot.title = element_text(hjust = 0.5)) + #to center the title of the plot
+  theme_minimal()
+```
+
+b. If you use another dictionary, would you get the same results? 
+[Recent work by Wouter van Atteveldt, Mariken van der Velden, and Mark Boukes shows that the results of sentiment analysis vastly differ between dictionaries.](https://github.com/vanatteveldt/ecosent)
+perform a sentiment analysis using another dictionary from `quanteda.dictionaries`. 
+Check and interpret the correlation between the sentiment analysis of the two different dictionaries.
+
+```{r, eval=F, message=F, warning=F}
+cor(result$sentiment1, result2$sentiment2)
+```
+
+c. Reflect on the validity of the current analysis, both at the level of specific hits and at an aggregate level. For the validity of specific hits, look at the `Key-Word-In-Context` listings for the 20 first hits, as discussed in the [sentiment tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md). Do the sentiment words correctly relate to the sentiment with which your concept is discussed (note: only focus on the words between angle brackets)? If the specific hits do not accurately measure sentiment, do you think the aggregate results are still usefull in your case?
+
+d. The method used in the tutorial is pretty crude. Even for dictionary methods, there are ways to improve results. Can you think of any problem in particular, and any ways to mend them? Are there problems which cannot be solved, or would be very hard to solve?
