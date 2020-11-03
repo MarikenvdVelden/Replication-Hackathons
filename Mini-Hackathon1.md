@@ -38,16 +38,15 @@ carefull not to choose a concept that has too many articles.
 
 ### Hackathon Challenges
 
-1.  Choose a political issue and perform a sentiment analysis. To do so,
-    we will work with the AmCAT data set on the US presidential
-    candidates in 2020. To get the data, one can run the following code
-    to download the data from AmCAT for the political issue you aim to
-    study. For example, if one ones to know what the presidential
-    candidates say about the European Uninion, you can run the code
-    chunk below. If you are interested in another political issue, you
-    can adapt the query.
+#### Challenge 1
 
-<!-- end list -->
+Choose a political issue and perform a sentiment analysis. To do so, we
+will work with the AmCAT data set on the US presidential candidates in
+2020. To get the data, one can run the following code to download the
+data from AmCAT for the political issue you aim to study. For example,
+if one ones to know what the presidential candidates say about the
+European Uninion, you can run the code chunk below. If you are
+interested in another political issue, you can adapt the query.
 
 ``` r
 library(amcatr) #have you installed this library last time?
@@ -195,17 +194,16 @@ ggplot(df, mapping = aes(x = date, y = sentiment1)) +
 
 ![](Mini-Hackathon1_files/figure-gfm/unnamed-chunk-14-1.png)<!-- -->
 
-2.  If you use another dictionary, would you get the same results?
-    [Recent work by Wouter van Atteveldt, Mariken van der Velden, and
-    Mark Boukes shows that the results of sentiment analysis vastly
-    differ between
-    dictionaries.](https://github.com/vanatteveldt/ecosent) perform a
-    sentiment analysis using another dictionary from
-    `quanteda.dictionaries`. Check and interpret the correlation between
-    the sentiment analysis of the two different dictionaries. I have
-    added the `data_dictionary_geninqposneg` dictionary.
+#### Challenge 2
 
-<!-- end list -->
+If you use another dictionary, would you get the same results? [Recent
+work by Wouter van Atteveldt, Mariken van der Velden, and Mark Boukes
+shows that the results of sentiment analysis vastly differ between
+dictionaries.](https://github.com/vanatteveldt/ecosent) perform a
+sentiment analysis using another dictionary from
+`quanteda.dictionaries`. Check and interpret the correlation between the
+sentiment analysis of the two different dictionaries. I have added the
+`data_dictionary_geninqposneg` dictionary.
 
 ``` r
 cor(result_AFINN$sentiment1, result_GENINQ$sentiment1)
@@ -240,18 +238,21 @@ ggplot(df, mapping = aes(x = date, y = sentiment1, group = id, colour = id)) +
 
 ![](Mini-Hackathon1_files/figure-gfm/unnamed-chunk-17-1.png)<!-- -->
 
-3.  Reflect on the validity of the current analysis, both at the level
-    of specific hits and at an aggregate level. For the validity of
-    specific hits, look at the `Key-Word-In-Context` listings for the 20
-    first hits, as discussed in the [sentiment
-    tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md).
-    Do the sentiment words correctly relate to the sentiment with which
-    your concept is discussed (note: only focus on the words between
-    angle brackets)? If the specific hits do not accurately measure
-    sentiment, do you think the aggregate results are still usefull in
-    your case?
+#### Challenge 3
 
-4.  The method used in the tutorial is pretty crude. Even for dictionary
-    methods, there are ways to improve results. Can you think of any
-    problem in particular, and any ways to mend them? Are there problems
-    which cannot be solved, or would be very hard to solve?
+Reflect on the validity of the current analysis, both at the level of
+specific hits and at an aggregate level. For the validity of specific
+hits, look at the `Key-Word-In-Context` listings for the 20 first hits,
+as discussed in the [sentiment
+tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md).
+Do the sentiment words correctly relate to the sentiment with which your
+concept is discussed (note: only focus on the words between angle
+brackets)? If the specific hits do not accurately measure sentiment, do
+you think the aggregate results are still usefull in your case?
+
+#### Challenge 4
+
+The method used in the tutorial is pretty crude. Even for dictionary
+methods, there are ways to improve results. Can you think of any problem
+in particular, and any ways to mend them? Are there problems which
+cannot be solved, or would be very hard to solve?
