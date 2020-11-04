@@ -46,7 +46,10 @@ will work with the AmCAT data set on the US presidential candidates in
 data from AmCAT for the political issue you aim to study. For example,
 if one wants to know what the presidential candidates say about the
 European Union, you can run the code chunk below. If you are interested
-in another political issue, you can adapt the query.
+in another political issue, you can adapt the query. If you did not yet
+install the `amcatr` package yet, take a look at [the tutorial of last
+week](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md)
+to see how to do this.
 
 ``` r
 library(amcatr) #have you installed this library last time?
