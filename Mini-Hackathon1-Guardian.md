@@ -163,7 +163,7 @@ library(tidyverse)
 ggplot(df, mapping = aes(x = date, y = sentiment1)) +
   geom_line(color = "seagreen") +
   labs(x = "", y = "Sentiment Score", 
-       title= "Tone of Presidential Candidates on European Union") +
+       title= "Tone of Guardian on Economy") +
   theme_minimal() +
   theme(plot.title = element_text(hjust = 0.5)) #to center the title of the plot
 ```
@@ -204,7 +204,7 @@ df <- result_AFINN %>%
 ggplot(df, mapping = aes(x = date, y = sentiment1, group = id, colour = id)) +
   geom_line() +
   labs(x = "", y = "Sentiment Score", 
-       title= "Tone of Presidential Candidates on European Union") +
+       title= "Tone of Guardian on Economy") +
   theme_minimal() +
   scale_color_manual(values=c("seagreen", "violet")) +
   theme(plot.title = element_text(hjust = 0.5),
