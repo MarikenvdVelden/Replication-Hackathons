@@ -144,19 +144,19 @@ result_AFINN <- result_AFINN %>%
 library(tidyquant)
 df <- result_AFINN %>%
     tq_transmute(select     = sentiment1,
-                 mutate_fun = apply.weekly, #or apply.monthly for week level
+                 mutate_fun = apply.monthly, #or apply.weekly for week level
                  FUN        = sum)
 head(df)
 ```
 
 | date       |  sentiment1 |
 | :--------- | ----------: |
-| 2012-01-07 | \-2.2122387 |
-| 2012-01-14 |   0.4351683 |
-| 2012-01-19 |   0.2476190 |
-| 2012-01-28 |   0.7626396 |
-| 2012-02-02 | \-0.3649421 |
-| 2012-02-10 |   0.8395379 |
+| 2012-01-28 | \-0.7668119 |
+| 2012-02-25 |   0.1108273 |
+| 2012-03-30 | \-1.0444823 |
+| 2012-04-27 |   0.6739423 |
+| 2012-05-28 |   2.8837905 |
+| 2012-06-28 | \-0.5612669 |
 
 ``` r
 library(tidyverse)
@@ -197,7 +197,7 @@ df <- result_AFINN %>%
   add_row(result_GENINQ) %>%
   group_by(id) %>%
     tq_transmute(select     = c(sentiment1),
-                 mutate_fun = apply.weekly, #or apply.monthly for week level
+                 mutate_fun = apply.monthly, #or apply.weekly for week level
                  FUN        = sum)
 #head(df)
 

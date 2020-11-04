@@ -137,7 +137,7 @@ result_AFINN <- result_AFINN %>%
 library(tidyquant)
 df <- result_AFINN %>%
     tq_transmute(select     = sentiment1,
-                 mutate_fun = apply.weekly, #or apply.monthly for week level
+                 mutate_fun = apply.monthly, #or apply.weekly for week level
                  FUN        = sum)
 head(df)
 
@@ -186,7 +186,7 @@ df <- result_AFINN %>%
   add_row(result_GENINQ) %>%
   group_by(id) %>%
     tq_transmute(select     = c(sentiment1),
-                 mutate_fun = apply.weekly, #or apply.monthly for week level
+                 mutate_fun = apply.monthly, #or apply.weekly for week level
                  FUN        = sum)
 #head(df)
 
