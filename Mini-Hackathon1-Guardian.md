@@ -116,6 +116,14 @@ Subsequently normalize the length of documents and compute a sort of
 overall sentiment score as explained in the [sentiment
 tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md).
 
+``` r
+result_AFINN <- result_AFINN %>% 
+  mutate(length = ntoken(dtm),
+         sentiment1 = (positive - negative) / (positive + negative),
+         sentiment2 = (positive - negative) / length,
+         subjectivity = (positive + negative) / length)
+```
+
 Visualize the results of the sentiment analysis using the code below.
 **NOTE**: the code chunck below assumes that you have created a
 sentiment variable yourself, in the example I have called the variable

@@ -110,7 +110,7 @@ head(result_AFINN)
 
 Subsequently normalize the length of documents and compute a sort of overall sentiment score as explained in the [sentiment tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md).
 
-```{r,message=F, warning=F, include=F}
+```{r,message=F, warning=F, include=T}
 result_AFINN <- result_AFINN %>% 
   mutate(length = ntoken(dtm),
          sentiment1 = (positive - negative) / (positive + negative),
