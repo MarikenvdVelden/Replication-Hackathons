@@ -57,11 +57,6 @@ corp <- download('data_corpus_guardian')
 ```
 
 ``` r
-library(quanteda.corpora)
-corp <- download('data_corpus_guardian')
-```
-
-``` r
 library(quanteda)
 q  <- grepl('econom', texts(corp), ignore.case = T)
 econ_news <- corpus_subset(corp, q)

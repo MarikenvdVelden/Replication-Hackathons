@@ -56,7 +56,7 @@ library(quanteda.corpora)
 corp <- download('data_corpus_guardian')
 ```
 
-```{r, message=F, warning=FALSE, cache=TRUE, include=T}
+```{r, message=F, warning=FALSE, cache=TRUE, include=F}
 library(quanteda.corpora)
 corp <- download('data_corpus_guardian')
 ```
