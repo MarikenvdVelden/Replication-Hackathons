@@ -1,0 +1,13 @@
+base
+printr
+rmarkdown
+rjson
+RCurl
+stringr
+jsonlite
+httr
+dplyr
+amcatr
+quanteda.corpora
+quanteda
+topicmodels
