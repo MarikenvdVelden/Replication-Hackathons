@@ -109,8 +109,7 @@ dtm
 library(quanteda) #Have you installed the package? If not, use install.packages("quanteda")
 
 #First: create a corpus
-corp <- corpus(d, docid_field = 'id', text_field = 'text')
-
+ 
 #Next: we can create a dtm
 dtm <- corp %>% 
         dfm(remove = stopwords("english"), remove_punct = T) %>% 

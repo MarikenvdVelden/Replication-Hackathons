@@ -32,7 +32,7 @@ If you aim to conduct additional analyses in R, we of course encourage this.
 Nevertheless, it is important to not do additional analysis just for the sake of running more code chunks. 
 For that reason, please provide a justification for these additional analyses.
 
-Also, we recommend to use parameters for RMarkdown codeblocks, in particular the `cache = TRUE` parameter for codeblocks that take long to compute (e.g., downloading data from AmCAT). 
+Also, we recommend to use parameters for RMarkdown codeblocks, in particular the `cache = TRUE` parameter for codeblocks that take long to compute (e.g., downloading data from the Guardian). 
 A brief explanation of some usefull parameters is given in the [the tutorial of last week](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md).
 
 Important to take into account is that this week you laptop will be doing the heavy lifting. 
@@ -96,7 +96,7 @@ library(quanteda.dictionaries)
 ?`quanteda.dictionaries-package`
 ```
 
-Choose a dictionary from `quanteda.dictionaries` and run this over the news articles collected from AmCAT.
+Choose a dictionary from `quanteda.dictionaries` and run this over the news articles collected from the Guardian.
 ```{r,message=F, warning=F}
 AFINN_dict <- dictionary(data_dictionary_AFINN)
 

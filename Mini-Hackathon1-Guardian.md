@@ -28,8 +28,8 @@ justification for these additional analyses.
 
 Also, we recommend to use parameters for RMarkdown codeblocks, in
 particular the `cache = TRUE` parameter for codeblocks that take long to
-compute (e.g., downloading data from AmCAT). A brief explanation of some
-usefull parameters is given in the [the tutorial of last
+compute (e.g., downloading data from the Guardian). A brief explanation
+of some usefull parameters is given in the [the tutorial of last
 week](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md).
 
 Important to take into account is that this week you laptop will be
@@ -85,7 +85,7 @@ library(quanteda.dictionaries)
 ```
 
 Choose a dictionary from `quanteda.dictionaries` and run this over the
-news articles collected from AmCAT.
+news articles collected from the Guardian.
 
 ``` r
 AFINN_dict <- dictionary(data_dictionary_AFINN)
