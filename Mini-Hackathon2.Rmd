@@ -43,106 +43,107 @@ Accordingly, in the assignment, you should be carefull not to choose a concept t
 #### Challenge 1
 Choose a data set and run a [LDA topic model](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/r_text_lda.md) to inquire the topics of the media agenda. 
 You can either work with the AmCAT data set with newspaper articles on the US presidential candidates in 2020 or the Guardian data set with newspaper articles in politics, economy, society and international sections from 2012 to 2016.
-To get the data, one can run the code to download the data from AmCAT or `quanteda.corpora`.
-Take a look at respectively [the tutorial of two weeks ago](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md) or last week ([here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1.md) and [here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1-Guardian.md)) to see how to do this.
+To get the data, one can run the code to download the data from `quanteda.corpora` or download the `.csv` file with AmCAT data from Canvas.
+Take a look at respectively [the tutorial of two weeks ago](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md) or last week ([here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1.md) and [here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1-Guardian.md)) to see how to obtain the data.
 
-```{r, echo=F, message=F, warning=F, include=F}
-library(amcatr) #have you installed this library last time?
-amcat.save.password("http://vucw.amcat.nl", username = "amcat", password = "amcat")
-```
-```{r, warning=FALSE, cache = T, message=F, include=F, eval=F}
-library(amcatr) #have you installed this library last time?
+```{r, warning=FALSE, message=F, include=F, eval=T}
+library(tidyverse)
+d <- read_csv("../amcat_data.csv")
 
-conn <- amcat.connect('http://vucw.amcat.nl')
-d <- amcat.hits(conn, queries = '', labels = 'eu', sets = 21, 
-                project = 1, col = c('date','medium','headline','text')) 
-#Check project number and article set number by logging in on http://vucw.amcat.nl/
-```
-
-```{r, eval=FALSE, include=F}
-amcat.save.password("http://vucw.amcat.nl", username="team + number (e.g. team01)", password="team + number (e.g. team01)")
-```
-
-```{r, eval=T, message=F, warning=F, include=F}
 library(quanteda.corpora)
 corp <- download('data_corpus_guardian')
 ```
 
-For later challenges in this hackathon, please already add a `year` variable to the corpus by running the following code:
+For later challenges in this hackathon, please already add a `year` variable to the corpus by running the following code if you use Guaridan data:
 
 ```{r, message=F,warning=F}
 library(quanteda)
 
-d <- convert(corp, to = "data.frame") %>%
+df <- convert(corp, to = "data.frame") %>%
   mutate(year = substr(date, 1, 4))
+corp <- corpus(df)
+```
 
-corp <- corpus(d)
+If you use AmCAT data, run the following code to add the variable:
+
+```{r, message=F,warning=F}
+d <-d %>%
+  mutate(month = substr(date, 6, 7))
 ```
 
 To conduct the analysis using LDA topic models, we have to create a document-term matrix (DTM), for more information about DTM, [see the tutorial on basic text analysis with quanteda](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/R_text_3_quanteda.md).
 Look at the tutorials of last week ([here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1.md) and [here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1-Guardian.md)) how you can shape the AmCAT data or the Guardian data into a dtm.
 
-```{r, eval=T, include=FALSE, message=F,warning=F}
+```{r, eval=T, include=FALSE, message=F,warning=F, cache=TRUE}
 #the data is already in corpus format so we can create a dtm
-dtm <- corp %>% 
+dtm_G <- corp %>% 
         dfm(remove = stopwords("english"), remove_punct = T) %>% 
         dfm_trim(min_docfreq = 5)
-dtm
+dtm_G
+
+corp_A <- corpus(d, docid_field = 'id', text_field = 'text')
+dtm_A <- corp_A %>% 
+        dfm(remove = stopwords("english"), remove_punct = T) %>% 
+        dfm_trim(min_docfreq = 5)
+dtm_A
+
 ```
 
 After turning the corpus into a dtm, run LDA topic model from a dfm -- have a look at the [tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/r_text_lda.md) to see how to do this.
-I will run a LDA topic model with 10 topics, and set the seed to the date of the tutorial.
-This can take some time if you do not have a powerful computer, don't forget `cache=T` therefore.
 
-```{r, eval=T, message=F, warning=F, include=F}
+**Don't forget to filter the words, otherwise the procedure of running an LDA might take forever, or even makes your computer crash.**
+
+I will run a LDA topic model with 10 topics, and set the seed to the date of the tutorial.
+
+This can take some time if you do not have a powerful computer, **don't forget `cache=T` therefore**.
+
+```{r, eval=T, message=F, warning=F, include=F, cache=F}
 library(topicmodels)
-dfm <- convert(dtm, to = "topicmodels") 
 set.seed(11112020)
-m <- LDA(dfm, method = "Gibbs", k = 10,  control = list(alpha = 0.1))
+
+dfm_G <- convert(dtm_G, to = "topicmodels") 
+m_G <- LDA(dfm_G, method = "Gibbs", k = 10,  control = list(alpha = 0.1))
+
+dfm_A <- convert(dtm_A, to = "topicmodels") 
+m_A <- LDA(dfm_A, method = "Gibbs", k = 10,  control = list(alpha = 0.1))
 ```
 
 #### Challenge 2
 Validation is very important when applying topic models to measure any agenda.
-Inspect and interpret the 10 topics using `terms`, `docvars` and plot a `wordcloud` for each topic to ease interpretation.
-Next, visualize the topic model using `LDAvis`.
-To do so, you need to have the package `servr` installed: `install.packages("servr")`.
+Inspect the results of your LDA model using `terms`, and make a wordcloud for at least 3 topics.
+Give an interpretation for each topic elaborated with an example.
+Have a look at the [tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/r_text_lda.md#inspecting-lda-results) for the code.
 
-```{r, message=F,warning=F, echo=F}
-terms(m, 5)
+```{r, warning=F, message=F}
+library(wordcloud)
 
-topic <- 6
-topic.docs <- posterior(m)$topics[, topic] 
-topic.docs <- sort(topic.docs, decreasing=T)
-docs <- docvars(dtm)
-topdoc <- names(topic.docs)[1]
-docid <- which(docnames(dtm) == topdoc)
-corp[docid]
+terms(m_G, 5)
+topic <- 5
+words_G <- posterior(m_G)$terms[topic, ]
+topwords_G <- head(sort(words_G, decreasing = T), n=50)
+wordcloud(names(topwords_G), topwords_G)
 
-dtm <- dtm[slam::row_sums(dtm) > 0, ]
-phi <- as.matrix(posterior(m)$terms)
-theta <- as.matrix(posterior(m)$topics)
-vocab <- colnames(phi)
-doc.length <- slam::row_sums(dtm)
-term.freq <- slam::col_sums(dtm)[match(vocab, colnames(dtm))]
-
-library(LDAvis)
-json <- createJSON(phi = phi, theta = theta, vocab = vocab,
-     doc.length = doc.length, term.frequency = term.freq)
-serVis(json) 
+terms(m_A, 5)
+topic <- 5
+words_A <- posterior(m_G)$terms[topic, ]
+topwords_A <- head(sort(words_A, decreasing = T), n=50)
+wordcloud(names(topwords_A), topwords_A)
 ```
 
-Finally, see in which years certain topics were more prevelent: 
+Finally, see in which years certain topics were more prevelent.
 
-```{r, message=F,warning=F, echo=F}
-library(dplyr)
-docs <- docs[docnames(dtm) %in% rownames(dtm), ]
-docs <- docs[1:5997,]
+```{r, message=F,warning=F, echo=F, eval=T}
+docs_G <- docvars(dtm_G)[match(rownames(dtm_G), docnames(dtm_G)),]
+docs_G <- docs_G[1:5997,]
+tpp_G <- aggregate(posterior(m_G)$topics, by=docs_G["year"], mean)
+rownames(tpp_G) = tpp_G$year
+heatmap(as.matrix(tpp_G[-1]))
 
-tpp <- aggregate(posterior(m)$topics, by=docs["year"], mean)
-rownames(tpp) <- tpp$year
-heatmap(as.matrix(tpp[-1]))
+docs_A <- docvars(dtm_A)[match(rownames(dtm_A), docnames(dtm_A)),]
+tpp_A <- aggregate(posterior(m_A)$topics, by=docs_A["month"], mean)
+rownames(tpp_A) = tpp_A$month
+heatmap(as.matrix(tpp_A[-1]))
 ```
-
 
 #### Challenge 3
 Reflect on the validity of the current analysis: to what extent do the results of the LDA model measure the media agenda?

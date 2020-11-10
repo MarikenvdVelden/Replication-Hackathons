@@ -46,26 +46,33 @@ to inquire the topics of the media agenda. You can either work with the
 AmCAT data set with newspaper articles on the US presidential candidates
 in 2020 or the Guardian data set with newspaper articles in politics,
 economy, society and international sections from 2012 to 2016. To get
-the data, one can run the code to download the data from AmCAT or
-`quanteda.corpora`. Take a look at respectively [the tutorial of two
-weeks
+the data, one can run the code to download the data from
+`quanteda.corpora` or download the `.csv` file with AmCAT data from
+Canvas. Take a look at respectively [the tutorial of two weeks
 ago](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md)
 or last week
 ([here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1.md)
 and
 [here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1-Guardian.md))
-to see how to do this.
+to see how to obtain the data.
 
 For later challenges in this hackathon, please already add a `year`
-variable to the corpus by running the following code:
+variable to the corpus by running the following code if you use Guaridan
+data:
 
 ``` r
 library(quanteda)
 
-d <- convert(corp, to = "data.frame") %>%
+df <- convert(corp, to = "data.frame") %>%
   mutate(year = substr(date, 1, 4))
+corp <- corpus(df)
+```
 
-corp <- corpus(d)
+If you use AmCAT data, run the following code to add the variable:
+
+``` r
+d <-d %>%
+  mutate(month = substr(date, 6, 7))
 ```
 
 To conduct the analysis using LDA topic models, we have to create a
@@ -81,18 +88,31 @@ how you can shape the AmCAT data or the Guardian data into a dtm.
 After turning the corpus into a dtm, run LDA topic model from a dfm –
 have a look at the
 [tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/r_text_lda.md)
-to see how to do this. I will run a LDA topic model with 10 topics, and
-set the seed to the date of the tutorial. This can take some time if you
-do not have a powerful computer, don’t forget `cache=T` therefore.
+to see how to do this.
+
+**Don’t forget to filter the words, otherwise the procedure of running
+an LDA might take forever, or even makes your computer crash.**
+
+I will run a LDA topic model with 10 topics, and set the seed to the
+date of the tutorial.
+
+This can take some time if you do not have a powerful computer, **don’t
+forget `cache=T` therefore**.
 
 #### Challenge 2
 
 Validation is very important when applying topic models to measure any
-agenda. Inspect and interpret the 10 topics using `terms`, `docvars` and
-plot a `wordcloud` for each topic to ease interpretation. Next,
-visualize the topic model using `LDAvis`. To do so, you need to have the
-package `servr` installed:
-`install.packages("servr")`.
+agenda. Inspect the results of your LDA model using `terms`, and make a
+wordcloud for at least 3 topics. Give an interpretation for each topic
+elaborated with an example. Have a look at the
+[tutorial](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/r_text_lda.md#inspecting-lda-results)
+for the code.
+
+``` r
+library(wordcloud)
+
+terms(m_G, 5)
+```
 
 | Topic 1 | Topic 2 | Topic 3 | Topic 4 | Topic 5        | Topic 6    | Topic 7    | Topic 8    | Topic 9 | Topic 10 |
 | :------ | :------ | :------ | :------ | :------------- | :--------- | :--------- | :--------- | :------ | :------- |
@@ -102,13 +122,40 @@ package `servr` installed:
 | court   | one     | health  | says    | gmt            | government | government | labour     | clinton | $        |
 | told    | two     | can     | like    | bst            | minister   | security   | government | new     | business |
 
-    ## Corpus consisting of 1 document and 10 docvars.
-    ## text66340 :
-    ## "The Palmer United party (PUP) has thrown its support behind ..."
+``` r
+topic <- 5
+words_G <- posterior(m_G)$terms[topic, ]
+topwords_G <- head(sort(words_G, decreasing = T), n=50)
+wordcloud(names(topwords_G), topwords_G)
+```
 
-Finally, see in which years certain topics were more prevelent:
+![](Mini-Hackathon2_files/figure-gfm/unnamed-chunk-6-1.png)<!-- -->
 
-![](Mini-Hackathon2_files/figure-gfm/unnamed-chunk-9-1.png)<!-- -->
+``` r
+terms(m_A, 5)
+```
+
+| Topic 1 | Topic 2    | Topic 3  | Topic 4 | Topic 5  | Topic 6   | Topic 7   | Topic 8     | Topic 9 | Topic 10    |
+| :------ | :--------- | :------- | :------ | :------- | :-------- | :-------- | :---------- | :------ | :---------- |
+| like    | court      | mr       | said    | said     | $         | mr        | said        | de      | bst         |
+| one     | senate     | biden    | united  | police   | said      | trump     | coronavirus | la      | coronavirus |
+| people  | said       | trump    | china   | black    | companies | president | health      | que     | �           |
+| can     | republican | said     | mr      | people   | new       | said      | new         | en      | cases       |
+| just    | election   | campaign | states  | protests | economic  | house     | virus       | el      | updated     |
+
+``` r
+topic <- 5
+words_A <- posterior(m_G)$terms[topic, ]
+topwords_A <- head(sort(words_A, decreasing = T), n=50)
+wordcloud(names(topwords_A), topwords_A)
+```
+
+![](Mini-Hackathon2_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
+
+Finally, see in which years certain topics were more
+prevelent.
+
+![](Mini-Hackathon2_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->![](Mini-Hackathon2_files/figure-gfm/unnamed-chunk-7-2.png)<!-- -->
 
 #### Challenge 3
 

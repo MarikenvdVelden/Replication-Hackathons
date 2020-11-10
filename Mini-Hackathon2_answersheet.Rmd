@@ -2,9 +2,7 @@
 layout: tutorial
 title: 'Mini-Hackathon 2: Sentiment Analysis'
 author: ""
-output:
-  github_document:
-  toc: yes
+output: pdf_document
 editor_options: 
   chunk_output_type: console
 ---
@@ -50,9 +48,7 @@ _You are recommended to use multiple codeblocks, and to use `cache = T` where us
 
 
 #### Challenge 2
- _If you would use another dictionary, do you get the same results?_
-_[Inspect and interpret the 10 topics using `terms`, `docvars` and plot a `wordcloud` for each topic to ease interpretation._
-_Next, visualize the topic model using `LDAvis`._
+_Validation is very important when applying topic models to measure any agenda. Inspect the results of your LDA model using `terms`, and make a wordcloud for at least 3 topics. Give an interpretation for each topic elaborated with an example._
 _Finally, see in which years certain topics were more prevelent._
 _You are recommended to use multiple codeblocks, and to use `cache = T` where usefull._
 

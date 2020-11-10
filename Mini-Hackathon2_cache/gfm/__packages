@@ -11,3 +11,10 @@ amcatr
 quanteda.corpora
 quanteda
 topicmodels
+tidyverse
+ggplot2
+tibble
+tidyr
+readr
+purrr
+forcats
