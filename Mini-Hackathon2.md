@@ -152,7 +152,7 @@ wordcloud(names(topwords_A), topwords_A)
 
 ![](Mini-Hackathon2_files/figure-gfm/unnamed-chunk-6-2.png)<!-- -->
 
-Finally, see in which years certain topics were more
+Finally, see in which years (for the Guardian data) or months (for the AmCAT data) certain topics were more
 prevelent.
 
 ![](Mini-Hackathon2_files/figure-gfm/unnamed-chunk-7-1.png)<!-- -->![](Mini-Hackathon2_files/figure-gfm/unnamed-chunk-7-2.png)<!-- -->
