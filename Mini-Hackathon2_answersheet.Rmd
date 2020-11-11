@@ -21,7 +21,7 @@ You must hand in your assignment on Canvas the next week before **Tuesday Midnig
 Use this RMarkdown template on the canvas page for this mini-hackathon to complete your hackathon.
 When you are finished, knit the file into a pdf with the knit button in the toolbar (or using Ctrl+Shift+K).
 For this you need to have the `knitr` and `printr` packages installed, and all your code needs to work (see the R course companion for more instructions).
-If you cannot knit the `.Rmd` file, there is probably an error in your R code, therefore add `eval=FALSE` to the code chunk: `{r, eval = FALSE}`, so you are still able to knit and upload the file.
+**If you cannot knit the `.Rmd` file, there is probably an error in your R code, therefore add `eval=FALSE` to the code chunk: `{r, eval = FALSE}`, so you are still able to knit and upload the file.**
 
 # This Mini-Hackathon
 This mini-hackathon builds upon the tutorial on [sentiment analysis](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md). 
