@@ -87,7 +87,7 @@ d <- corpus_subset(corp, q) %>%
   convert(corp, to = "data.frame")
 ```
 
-Querying the Guardian data is desceribed in
+Querying the Guardian data is described in
 [Mini-Hackathon 2](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon2.md).
 
 #### Challenge 2

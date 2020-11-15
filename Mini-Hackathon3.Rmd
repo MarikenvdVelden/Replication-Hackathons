@@ -64,7 +64,7 @@ d <- corpus_subset(corp, q) %>%
   convert(corp, to = "data.frame")
 ```
 
-Querying the Guardian data is desceribed in [Mini-Hackathon 2](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon2.md).
+Querying the Guardian data is described in [Mini-Hackathon 2](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon2.md).
 
 #### Challenge 2
 Develop an infographic making a meaningful visualization of your data with `ggplot2`.
