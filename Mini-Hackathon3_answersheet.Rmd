@@ -41,9 +41,10 @@ Important to take into account is that this week we will build upon codes of las
  _Choose a data set._
 _Perform the following transformations to the data based on the tidyverse:_
 
-- _Apply a dictionary from `quanteda.dictionaries` on the corpus of texts of your data and create a meaningful variable using `mutate`._
-- _Subset the data to (a) separate out values that are not of interest (e.g. neutral category in sentiment analyses) using `filter`; and (b) keep only the variables in the data that you can use for computing properties using `select`._ 
-- _Aggregate (or summarize) the data to another group level, for example to another time level (e.g. monthly level) or based on another interesting variable  (e.g. news outlet) using `group_by`, and `summarize` or `mutate`. _
+- _Apply a dictionary from `quanteda.dictionaries` to the corpus of your textual data and create a meaningful variable using `mutate`._
+- _Subset the data set by (a) filtering out values that are not of interest (e.g. neutral category in sentiment analyses) using `filter`; and (b) selecting the variables that you need for computing new variables (e.g. mean values of a variable), using `select`. _
+- _Aggregate (or summarize) the data to another group level, for example to another time level (e.g. monthly level) or based on another variable of your choice (e.g. news outlet) using `group_by`, and `summarize` or `mutate`._
+
 
 
 ```{r, echo=FALSE, message=F}
@@ -52,11 +53,11 @@ _Perform the following transformations to the data based on the tidyverse:_
 
 
 #### Challenge 2
-_Develop an infographic making a meaningful visualization of your data with `ggplot2`. Try to make the plot as appealing as possible._
+_Develop an infographic to visualize a meaningful relationship based on your data using `ggplot2`.Try to make the infographic as informative and appealing as possible._
 
 #### Challenge 3
-_What does your graph demonstrate: write it up as if you would inform an Economist reader._
+_What does your infographic demonstrate? Explain your answer as if you would inform an Economist reader._
 
 ### Challenge 4
-_What if you would write for a tabloid newspaper, would you assess the visual literacy of the readershipto change? If so, what would you adjust in the infographic?_
+_What if you would write for a tabloid newspaper such as the Sun, would you assess the visual literacy of the readershipto change? If so, what would you adjust in the infographic?_
 

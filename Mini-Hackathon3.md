@@ -93,9 +93,9 @@ Querying the Guardian data is described in
 
 #### Challenge 2
 
-Develop an infographic making a meaningful visualization of your data
-with `ggplot2`. Try to make the plot as appealing as possible. For this,
-you can use the [*ggplot2 cheat
+Develop an infographic to visualize a meaningful relationship based on
+your data using `ggplot2`. Try to make the infographic as informative
+and appealing as possible. For this, you can use the [*ggplot2 cheat
 sheet*](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf),
 the [*R Graphics Cookbook*](http://www.cookbook-r.com/Graphs/), and/ or
 the [*BBC Visual and Data Journalism
@@ -104,11 +104,11 @@ than one graph, have a look at the `facet_wrap` function: `?facet_wrap`.
 
 #### Challenge 3
 
-What does your graph demonstrate? Write it up as if you would inform an
-Economist reader.
+What does your infographic demonstrate? Explain your answer as if you
+would inform an Economist reader.
 
 #### Challenge 4
 
-What if you would write for a tabloid newspaper, would you assess the
-visual literacy of the readershipto change? If so, what would you adjust
-in the infographic?
+What if you would write for a tabloid newspaper such as the Sun, would
+you assess the visual literacy of the readershipto change? If so, what
+would you adjust in the infographic?
