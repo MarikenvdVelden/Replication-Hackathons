@@ -52,24 +52,25 @@ Guardian data set with newspaper articles in politics, economy, society
 and international sections from 2012 to 2016. To get the data, one can
 run the code to download the data from `quanteda.corpora` or download
 the `.csv` file with AmCAT data from Canvas. Take a look at respectively
-[the first tutorial
-ago](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md)
-or the first mini-hackathon
-([here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1.md)
+[the first
+tutorial](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md)
+or the first mini-hackathon (see
+[here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1.md)
 and
 [here](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Mini-Hackathon1-Guardian.md))
-to see how to obtain the data. Perform the following transformations to
-the data based on the tidyverse:
+to see how to import data. Use tidyverse to transform the data in the
+following ways:
 
-  - Apply a dictionary from `quanteda.dictionaries` on the corpus of
-    texts of your data and create a meaningful variable using `mutate`.
-  - Subset the data to (a) separate out values that are not of interest
-    (e.g. neutral category in sentiment analyses) using `filter`; and
-    (b) keep only the variables in the data that you can use for
-    computing properties using `select`.
+  - Apply a dictionary from `quanteda.dictionaries` to the corpus of
+    your textual data and create a meaningful variable using `mutate`.
+  - Subset the data set by (a) filtering out values that are not of
+    interest (e.g. neutral category in sentiment analyses) using
+    `filter`; and (b) selecting the variables that you need for
+    computing new variables (e.g. mean values of a variable), using
+    `select`.
   - Aggregate (or summarize) the data to another group level, for
     example to another time level (e.g. monthly level) or based on
-    another interesting variable (e.g. news outlet) using `group_by`,
+    another variable of your choice (e.g. news outlet) using `group_by`,
     and `summarize` or `mutate`.
 
 If you want to use the following code to query the AmCAT data set based
