@@ -41,7 +41,7 @@ Important to take into account is that this week we will build upon codes of las
  _Choose a data set._
 _Perform the following transformations to the data based on the tidyverse:_
 
-- _Apply a dictionary from `quanteda.dictionaries` to the corpus of your textual data and create a meaningful variable using `mutate`._
+- _Apply a dictionary from `quanteda.dictionaries` to the corpus of your textual data and create a meaningful variable (e.g. [subjectivity score](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md)) using `mutate`._
 - _Subset the data set by (a) filtering out values that are not of interest (e.g. neutral category in sentiment analyses) using `filter`; and (b) selecting the variables that you need for computing new variables (e.g. mean values of a variable), using `select`. _
 - _Aggregate (or summarize) the data to another group level, for example to another time level (e.g. monthly level) or based on another variable of your choice (e.g. news outlet) using `group_by`, and `summarize` or `mutate`._
 
@@ -59,5 +59,5 @@ _Develop an infographic to visualize a meaningful relationship based on your dat
 _What does your infographic demonstrate? Explain your answer as if you would inform an Economist reader._
 
 ### Challenge 4
-_What if you would write for a tabloid newspaper such as the Sun, would you assess the visual literacy of the readershipto change? If so, what would you adjust in the infographic?_
+_What if you would write for a tabloid newspaper such as the Sun, would you assess, based on he conclusions in the study of [Prior (2014)](https://vu.on.worldcat.org/oclc/8272642139), the visual literacy of the readership to change? If so, what would you adjust in the infographic?_
 

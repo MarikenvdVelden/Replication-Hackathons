@@ -125,7 +125,7 @@ wordcloud(names(topwords_G), topwords_G)
 
 terms(m_A, 5)
 topic <- 5
-words_A <- posterior(m_G)$terms[topic, ]
+words_A <- posterior(m_A)$terms[topic, ]
 topwords_A <- head(sort(words_A, decreasing = T), n=50)
 wordcloud(names(topwords_A), topwords_A)
 ```

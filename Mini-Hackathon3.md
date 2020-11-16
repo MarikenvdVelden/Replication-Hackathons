@@ -62,7 +62,10 @@ to see how to import data. Use tidyverse to transform the data in the
 following ways:
 
   - Apply a dictionary from `quanteda.dictionaries` to the corpus of
-    your textual data and create a meaningful variable using `mutate`.
+    your textual data and create a meaningful variable (e.g.
+    [subjectivity
+    score](https://github.com/ccs-amsterdam/r-course-material/blob/master/tutorials/sentiment_analysis.md))
+    using `mutate`.
   - Subset the data set by (a) filtering out values that are not of
     interest (e.g. neutral category in sentiment analyses) using
     `filter`; and (b) selecting the variables that you need for
@@ -110,5 +113,7 @@ would inform an Economist reader.
 #### Challenge 4
 
 What if you would write for a tabloid newspaper such as the Sun, would
-you assess the visual literacy of the readershipto change? If so, what
-would you adjust in the infographic?
+you assess, based on he conclusions in the study of [Prior
+(2014)](https://vu.on.worldcat.org/oclc/8272642139), the visual literacy
+of the readership to change? If so, what would you adjust in the
+infographic?
