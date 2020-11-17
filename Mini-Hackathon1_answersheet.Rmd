@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: 'Mini-Hackathon 3: Tidy Scripts'
+title: 'Mini-Hackathon 1: Sentiment Analysis'
 author: ""
 output: pdf_document
 editor_options: 
