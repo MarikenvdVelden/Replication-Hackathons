@@ -1,14 +1,12 @@
 ---
 layout: tutorial
-title: 'Mini-Hackathon 1: Sentiment Analysis'
-author: "Mariken van der Velden & Kasper Welbers"
-output:
-  github_document:
-  toc: yes
+title: 'Mini-Hackathon 3: Tidy Scripts'
+author: ""
+output: pdf_document
 editor_options: 
   chunk_output_type: console
 ---
-  
+
 ```{r setup, include=FALSE}
 ## include this at top of your RMarkdown file for pretty output
 ## make sure to have the printr package installed: install.packages('printr')
