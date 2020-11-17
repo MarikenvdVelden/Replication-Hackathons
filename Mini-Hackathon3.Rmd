@@ -76,7 +76,7 @@ If you want to make more than one graph, have a look at the `facet_wrap` functio
 What does your infographic demonstrate? Explain your answer as if you would inform an Economist reader.
 
 #### Challenge 4
-What if you would write for a tabloid newspaper such as the Sun, would you assess, based on he conclusions in the study of [Prior (2014)](https://vu.on.worldcat.org/oclc/8272642139), the visual literacy of the readership to change? If so, what would you adjust in the infographic?
+What if you would write for a tabloid newspaper such as the Sun, would you assess, based on the conclusions in the study of [Prior (2014)](https://vu.on.worldcat.org/oclc/8272642139), the visual literacy of the readership to change? If so, what would you adjust in the infographic?
 
 
 

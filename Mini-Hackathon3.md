@@ -113,7 +113,7 @@ would inform an Economist reader.
 #### Challenge 4
 
 What if you would write for a tabloid newspaper such as the Sun, would
-you assess, based on he conclusions in the study of [Prior
+you assess, based on the conclusions in the study of [Prior
 (2014)](https://vu.on.worldcat.org/oclc/8272642139), the visual literacy
 of the readership to change? If so, what would you adjust in the
 infographic?
