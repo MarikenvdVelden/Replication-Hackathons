@@ -100,8 +100,9 @@ Develop an infographic to visualize a meaningful relationship based on
 your data using `ggplot2`. Try to make the infographic as informative
 and appealing as possible. For this, you can use the [*ggplot2 cheat
 sheet*](https://rstudio.com/wp-content/uploads/2015/03/ggplot2-cheatsheet.pdf),
-the [*R Graphics Cookbook*](http://www.cookbook-r.com/Graphs/), and/ or
-the [*BBC Visual and Data Journalism
+the [*R Graphics Cookbook*](http://www.cookbook-r.com/Graphs/), [Kieran
+Healy’s *Data Visualization* book](https://socviz.co/), and/ or the
+[*BBC Visual and Data Journalism
 Cookbook*](https://bbc.github.io/rcookbook/). If you want to make more
 than one graph, have a look at the `facet_wrap` function: `?facet_wrap`.
 
