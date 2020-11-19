@@ -420,7 +420,8 @@ p <- ggplot(data = long_d,
         legend.position = "bottom",
         legend.box="vertical",
         plot.title = element_text(hjust = 0.5))
-p + transition_reveal(date)
+p + geom_point() +
+  transition_reveal(date)
 ```
 
 At this point it might be appropriate to say that we do not actually need to use this complex, lengthy custom plot code.
