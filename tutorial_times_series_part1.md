@@ -233,12 +233,12 @@ head(d)
 ```
 
     ##         date hits keyword geo                  time gprop category      date2
-    ## 1 2020-01-05   52 economy  US 2020-01-01 2020-10-31   web        0 2020-01-05
-    ## 2 2020-01-12   58 economy  US 2020-01-01 2020-10-31   web        0 2020-01-12
-    ## 3 2020-01-19   58 economy  US 2020-01-01 2020-10-31   web        0 2020-01-19
-    ## 4 2020-01-26   63 economy  US 2020-01-01 2020-10-31   web        0 2020-01-26
+    ## 1 2020-01-05   54 economy  US 2020-01-01 2020-10-31   web        0 2020-01-05
+    ## 2 2020-01-12   61 economy  US 2020-01-01 2020-10-31   web        0 2020-01-12
+    ## 3 2020-01-19   60 economy  US 2020-01-01 2020-10-31   web        0 2020-01-19
+    ## 4 2020-01-26   66 economy  US 2020-01-01 2020-10-31   web        0 2020-01-26
     ## 5 2020-02-02   68 economy  US 2020-01-01 2020-10-31   web        0 2020-02-02
-    ## 6 2020-02-09   66 economy  US 2020-01-01 2020-10-31   web        0 2020-02-09
+    ## 6 2020-02-09   69 economy  US 2020-01-01 2020-10-31   web        0 2020-02-09
     ##        date3  n
     ## 1 2020-01-06 15
     ## 2 2020-01-13 14
@@ -408,7 +408,7 @@ head(as.data.frame(d))  ## use as.data.frame for prettier printing (due to compa
     ## 2020-01-02     245.0312            NA              12
     ## 2020-01-03     215.9512            NA              16
     ## 2020-01-04           NA            NA              14
-    ## 2020-01-05           NA            52              15
+    ## 2020-01-05           NA            54              15
     ## 2020-01-06     289.3887            NA              16
 
 To later merge the polling data, I need to convert the `dt` data set
@@ -475,14 +475,14 @@ head(d, 15)
     ## 2  2020-01-02    245.03125            NA              12      <NA>
     ## 3  2020-01-03    215.95117            NA              16      <NA>
     ## 4  2020-01-04           NA            NA              14      <NA>
-    ## 5  2020-01-05           NA            52              15      <NA>
+    ## 5  2020-01-05           NA            54              15      <NA>
     ## 6  2020-01-06    289.38867            NA              16      <NA>
     ## 7  2020-01-07    120.22070            NA              15      <NA>
     ## 8  2020-01-08    343.66992            NA              29      <NA>
     ## 9  2020-01-09    143.69922            NA              21      <NA>
     ## 10 2020-01-10    219.97070            NA              20      <NA>
     ## 11 2020-01-11           NA            NA              14      <NA>
-    ## 12 2020-01-12           NA            58              14      <NA>
+    ## 12 2020-01-12           NA            61              14      <NA>
     ## 13 2020-01-13     90.48047            NA              24      <NA>
     ## 14 2020-01-14    181.89062            NA              28      <NA>
     ## 15 2020-01-15    230.24023            NA              27      <NA>
@@ -546,7 +546,8 @@ long_d <- combined %>%
                ifelse(id == "media", "Subjective Economy",
                ifelse(id == "trends", "Subjective Economy", "Objective Economy"))))
 
-ggplot(data = long_d, 
+library(gganimate)
+p <- ggplot(data = long_d, 
        mapping = aes(x = date, y = value, group = id, colour = id)) +
   geom_line() +
   labs(x = "", y = "Mean Values", title = "Times-Series: Objective and Subjective State of the Economy & Trump Support") +
@@ -556,9 +557,10 @@ ggplot(data = long_d,
   theme(legend.title=element_blank(), #edit the legend
         legend.position = "bottom",
         plot.title = element_text(hjust = 0.5))
+p + transition_reveal(date)
 ```
 
-![](tutorial_times_series_part1_files/figure-gfm/unnamed-chunk-29-1.png)<!-- -->
+![](tutorial_times_series_part1_files/figure-gfm/unnamed-chunk-29-1.gif)<!-- -->
 
 At this point it might be appropriate to say that we do not actually
 need to use this complex, lengthy custom plot code. R has special
