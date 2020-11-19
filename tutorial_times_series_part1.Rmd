@@ -1,6 +1,6 @@
 ---
 layout: tutorial
-title: 'Working with Times-Series: Combining media and real-world data'
+title: 'Working with Times-Series: Combining Media and Real-World Data'
 author: "Mariken van der Velden, Kasper Welbers & Wouter van Atteveldt"
 output: 
   github_document:

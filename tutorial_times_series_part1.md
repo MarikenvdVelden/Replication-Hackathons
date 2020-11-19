@@ -1,4 +1,4 @@
-Working with Times-Series: Combining media and real-world data
+Working with Times-Series: Combining Media and Real-World Data
 ================
 Mariken van der Velden, Kasper Welbers & Wouter van Atteveldt
 
