@@ -394,14 +394,19 @@ We now have the time series cleanly together, and ready to perform time series a
 In this tutorial, we'll only focus on qualitatively comparing the time series. 
 Let's visualize the data to make this easier.
 
-```{r}
+```{r, fig.width=10}
 # Make data set "long" for visualization purposes
 long_d <- combined %>%
   pivot_longer(cols = media:support_trump) %>%
   select(date, id = name, value) %>%
   mutate(id2 = ifelse(id == "support_trump", "Outcome Variable",
                ifelse(id == "media", "Subjective Economy",
-               ifelse(id == "trends", "Subjective Economy", "Objective Economy"))))
+               ifelse(id == "trends", "Subjective Economy", "Objective Economy"))),
+         id = recode(id, 
+                     `support_trump` = "Support for Trump",
+                     `media` = "Media Attention",
+                     `trends` = "Google Trends Searches",
+                     `stock_volat` = "Stock Market Volatility"))
 
 library(gganimate)
 p <- ggplot(data = long_d, 
@@ -413,6 +418,7 @@ p <- ggplot(data = long_d,
   scale_color_manual(values=c("seagreen", "violet","coral3", "dodgerblue4")) +
   theme(legend.title=element_blank(), #edit the legend
         legend.position = "bottom",
+        legend.box="vertical",
         plot.title = element_text(hjust = 0.5))
 p + transition_reveal(date)
 ```

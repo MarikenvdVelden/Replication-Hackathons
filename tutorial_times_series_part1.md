@@ -544,7 +544,12 @@ long_d <- combined %>%
   select(date, id = name, value) %>%
   mutate(id2 = ifelse(id == "support_trump", "Outcome Variable",
                ifelse(id == "media", "Subjective Economy",
-               ifelse(id == "trends", "Subjective Economy", "Objective Economy"))))
+               ifelse(id == "trends", "Subjective Economy", "Objective Economy"))),
+         id = recode(id, 
+                     `support_trump` = "Support for Trump",
+                     `media` = "Media Attention",
+                     `trends` = "Google Trends Searches",
+                     `stock_volat` = "Stock Market Volatility"))
 
 library(gganimate)
 p <- ggplot(data = long_d, 
@@ -556,6 +561,7 @@ p <- ggplot(data = long_d,
   scale_color_manual(values=c("seagreen", "violet","coral3", "dodgerblue4")) +
   theme(legend.title=element_blank(), #edit the legend
         legend.position = "bottom",
+        legend.box="vertical",
         plot.title = element_text(hjust = 0.5))
 p + transition_reveal(date)
 ```
