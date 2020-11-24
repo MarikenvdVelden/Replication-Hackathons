@@ -1,0 +1,73 @@
+Mini-Hackathon 4: Times-Series Part I
+================
+Mariken van der Velden & Kasper Welbers
+
+Mini-Hackathons are performed and submitted in pairs of two. You must
+hand in your assignment on Canvas the next week before **Tuesday
+Midnight**.
+
+Use this RMarkdown template on the canvas page for this mini-hackathon
+to complete your hackathon. When you are finished, knit the file into a
+pdf with the knit button in the toolbar (or using Ctrl+Shift+K). For
+this you need to have the `knitr` and `printr` packages installed, and
+all your code needs to work (see the R course companion for more
+instructions). If you cannot knit the `.Rmd` file, there is probably an
+error in your R code, therefore add `eval=FALSE` to the code chunk: `{r,
+eval = FALSE}`, so you are still able to knit and upload the file.
+
+# This Mini-Hackathon
+
+This mini-hackathon builds upon the tutorial on [times-series
+analysis](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/tutorial_times_series_part1.md).
+For this hackathon, you can (and are strongly recommended to) use code
+from this week’s tutorial as well as provided here. If you aim to
+conduct additional analyses in R, we of course encourage this.
+Nevertheless, it is important to not do additional analysis just for the
+sake of running more code chunks. For that reason, please provide a
+justification for these additional analyses.
+
+Also, we recommend to use parameters for RMarkdown codeblocks, in
+particular the `cache = TRUE` parameter for codeblocks that take long to
+compute (e.g., downloading data from AmCAT). A brief explanation of some
+usefull parameters to make a `.Rmd` file pretty is given in the [first
+tutorial](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md).
+Additionally, you can use [this cheat
+sheet](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf).
+
+Important to take into account is that this week we will build upon
+codes of last weeks.
+
+### Hackathon Challenges
+
+#### Challenge 1
+
+Choose a data set to measure public opinion on a political topic that
+could have driven the popularity of the US presidential candidates. You
+can either work with the:
+
+  - AmCAT data set with newspaper articles on the US presidential
+    candidates in 2020;
+  - Google trends data
+
+#### Challenge 2
+
+Choose an objective indicator for the economy, as described in [the
+tutorial](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/tutorial_times_series_part1.md).
+Merge this data with the public opinion data.
+
+#### Challenge 3
+
+Combine the data created in Challenge 1 and 2 with polling data, as
+described in [the
+tutorial](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/tutorial_times_series_part1.md).
+
+#### Challenge 4
+
+Visualize and descripe the trends of public opinion, the objective state
+of the economy, and support for the presidential candidates over time.
+
+#### Challenge 5
+
+Does public opinion or the subjective state of the economy forecast a
+change in polling for Trump or Biden? To answer the question, run a
+correlation and interpret the value. What does this mean?

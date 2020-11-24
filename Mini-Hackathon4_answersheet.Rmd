@@ -1,10 +1,8 @@
 ---
 layout: tutorial
 title: 'Mini-Hackathon 4: Times-Series Part I'
-author: "Mariken van der Velden & Kasper Welbers"
-output:
-  github_document:
-  toc: yes
+author: ""
+output: pdf_document
 editor_options: 
   chunk_output_type: console
 ---
@@ -41,27 +39,20 @@ Important to take into account is that this week we will build upon codes of las
 ### Hackathon Challenges
 
 #### Challenge 1
-Choose a data set to measure public opinion on a political topic that could have driven the popularity of the US presidential candidates. 
-You can either work with the:
-
-- AmCAT data set with newspaper articles on the US presidential candidates in 2020;
-- Google trends data
+_Choose a data set to measure public opinion on a political topic that could have driven the popularity of the US presidential candidates._
 
 
 ####  Challenge 2
-Choose an objective indicator for the economy, as described in [the tutorial](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/tutorial_times_series_part1.md).
-Merge this data with the public opinion data.
+_Choose an objective indicator for the economy, as described in [the tutorial](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/tutorial_times_series_part1.md). Merge this data with the public opinion data._
 
 #### Challenge 3
-Combine the data created in Challenge 1 and 2 with polling data, as described in [the tutorial](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/tutorial_times_series_part1.md).
+_Combine the data created in Challenge 1 and 2 with polling data, as described in [the tutorial](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/tutorial_times_series_part1.md)._
 
 #### Challenge 4
-Visualize and descripe the trends of public opinion, the objective state of the economy, and support for the presidential candidates over time.
+_Visualize and descripe the trends of public opinion, the objective state of the economy, and support for the presidential candidates over time._
 
 #### Challenge 5
-Does public opinion or the subjective state of the economy forecast a change in polling for Trump or Biden?
-To answer the question, run a correlation and interpret the value.
-What does this mean?
+_Does public opinion or the subjective state of the economy forecast a change in polling for Trump or Biden? To answer the question, run a correlation and interpret the value. What does this mean?_
 
 
 
