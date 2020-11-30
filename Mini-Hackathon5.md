@@ -29,8 +29,8 @@ Also, we recommend to use parameters for RMarkdown codeblocks, in
 particular the `cache = TRUE` parameter for codeblocks that take long to
 compute (e.g., downloading data from AmCAT). A brief explanation of some
 usefull parameters to make a `.Rmd` file pretty is given in the [the
-tutorial of two weeks
-ago](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md).
+first
+tutorial](https://github.com/MarikenvdVelden/Replication-Hackathons/blob/main/Intro-to-rmd-and-data-retrieval.md).
 Additionally, you can use [this cheat
 sheet](https://rstudio.com/wp-content/uploads/2015/02/rmarkdown-cheatsheet.pdf).
 
